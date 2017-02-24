@@ -1,0 +1,36 @@
+/**
+ * Base controller.
+ */
+export default class BaseController
+{
+///////////////////////////////////////////////////////////////////////////////////////
+// PUBLIC METHODS
+///////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Constructor.
+     *
+     * @param {object} options Marionette.Object options object
+     */
+    constructor(options)
+    {
+        this._initializeViews();
+        this._initializeRadio();
+    }
+
+///////////////////////////////////////////////////////////////////////////////////////
+// PRIVATE METHODS
+///////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * Initialize Radio.
+     */
+    _initializeRadio()
+    {
+    }
+
+    /**
+     * Initialize views.
+     */
+    _initializeViews()
+    {
+    }
+}
