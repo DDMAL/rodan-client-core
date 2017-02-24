@@ -177,11 +177,11 @@ gulp.task('test', ['test:mkdir', 'test:link', 'test:info'], function(callback)
 // TASKS - Master
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Default task (build).
+ * Default task (test).
  */
 gulp.task('default', function(callback)
 {
-    gulp.start('build');
+    gulp.start('test');
     callback();
 });
 

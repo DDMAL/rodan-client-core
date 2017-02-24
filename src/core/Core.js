@@ -61,69 +61,29 @@ export default class Core
             Radio.tuneIn('rodan-client-core');
         }
 
+        // Initialize.
         this._initializeRadio();
         this._initializeCollections();
-
-        Configuration.load('info.json');
-/*        this.addRegions({
-            regionMaster: '#region-master'
-        });
-*/
-        // Non-network and non-GUI inits. Do these first.
-//        this._initializeBehaviors();
-//        this._initializeDateTimeFormatter();
-//        this._initializeManagers();
-
         this._initializeAjaxPrefilters();
-//        this._initializeViews();
         this._initializeControllers();
+
+        // Get client info.
+        Configuration.load('info.json');
+
+        // Extended setup should be done here.
+        this._customInitialization();
         
         // This should be last.
 //        require('./.plugins');
 
+        // We're ready to go! Connect to the server.
         Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_LOAD_ROUTES);
     }
 
     /**
-     * Initialize managers.
+     * Custom initialization.
      */
-    _initializeManagers()
-    {
- /*       this._transferManager = new TransferManager();
-        this._updateManager = new UpdateManager();
-        this._errorManager = new ErrorManager();
- */   }
-
-    /**
-     * Initializes various helpers.
-     */
-    _initializeDateTimeFormatter()
-    {
- /*       moment.defaultFormat = Configuration.DATETIME_FORMAT;
-        _.formatFromUTC = function(dateTime)
-        {
-            // TODO - see https://github.com/DDMAL/rodan-client/issues/59
-            try
-            {
-                return moment(dateTime).format();
-            }
-            catch(error)
-            {
-                return moment.moment(dateTime).format();
-            }
-        };
- */   }
-
-    /**
-     * Initialize behaviors.
-     */
-    _initializeBehaviors()
-    {
-//        Marionette.Behaviors.behaviorsLookup = function()
-//        {
-//            return {'Table': BehaviorTable};
-//        };
-    }
+    _customInitialization() {}
 
     /**
      * Set event binding.
@@ -139,11 +99,9 @@ export default class Core
      */
     _initializeControllers()
     {
- //       this._contextMenuController = new ControllerContextMenu();
  //       this._downloadController = new ControllerDownload();
         this._controllerServer = new ControllerServer();
         this._controllerAuthentication = new ControllerAuthentication(this._controllerServer);
- //       this._modalController = new ControllerModal();
  //       this._projectController = new ControllerProject();
  //       this._resourceController = new ControllerResource();
  //       this._resourceListController = new ControllerResourceList();
@@ -179,14 +137,6 @@ export default class Core
         this._inputPortTypeCollection = new GlobalInputPortTypeCollection();
         this._outputPortTypeCollection = new GlobalOutputPortTypeCollection();
         this._projectCollection = new GlobalProjectCollection();
-    }
-
-    /**
-     * Initialize all the views so they can respond to events.
-     */
-    _initializeViews()
-    {
-//        this._layoutViewMaster = new LayoutViewMaster();
     }
 
     /**
