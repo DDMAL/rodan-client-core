@@ -57,7 +57,7 @@ export default class Core
      */
     constructor()
     {
-        Configuration.load('configuration.json', () => this._startUp());
+        this._startUp();
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
