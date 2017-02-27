@@ -23,7 +23,7 @@ const TEST_DIRECTORY = 'test';
 // CONFIGURATION - build
 // NOTE: don't edit this unless you know what you're doing.
 ////////////////////////////////////////////////////////////////////////////////
-const BUILD_ROOT = 'dist';
+const BUILD_ROOT = 'build';
 const CONFIGURATION_FILE = 'configuration.json';
 const CONFIGURATION_EXAMPLE_FILE = 'configuration.example.json';
 const ENTRY_FILE = './src/index.js';
@@ -44,7 +44,7 @@ var webpackConfig =
     {
         filename: OUTPUT_FILE,
         library: LIBRARY_NAME,
- //       libraryTarget: LIBRARY_TARGET,
+        libraryTarget: LIBRARY_TARGET,
         path: path.resolve(__dirname, BUILD_ROOT)
     },
     module: 

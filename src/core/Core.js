@@ -29,6 +29,7 @@ import GlobalResourceTypeCollection from 'lib/Collections/Global/GlobalResourceT
 import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
 
 let _instance = null;
+let _postInitFunction = null;
 
 /**
  * Main application class.
@@ -49,6 +50,20 @@ export default class Core
         }
     }
 
+    /**
+     * This method takes in a function that will be called after the Core is
+     * initialized and before REQUEST__SERVER_LOAD_ROUTES is called. The
+     * function passed here should initialize anything required for viewing or
+     * other custom behavior for the application.
+     *
+     * @param {function} postInitFunction function to be called after init
+     */
+    static setPostInitializeFunction(postInitFunction)
+    {
+        _postInitFunction = postInitFunction;
+    }
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // PUBLIC METHODS
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,17 +71,6 @@ export default class Core
      * Constructor.
      */
     constructor()
-    {
-        this._startUp();
-    }
-
-///////////////////////////////////////////////////////////////////////////////////////
-// PRIVATE METHODS
-///////////////////////////////////////////////////////////////////////////////////////
-    /**
-     * Application start-up
-     */
-    _startUp()
     {
         // Check debug.
         if (Configuration.DEBUG)
@@ -84,21 +88,19 @@ export default class Core
         // Get client info.
         Configuration.load('info.json');
 
-        // Extended setup should be done here.
-        this._customInitialization();
-        
-        // This should be last.
-//        require('./.plugins');
+        // Call post init.
+        if (_postInitFunction)
+        {
+            _postInitFunction();  
+        }
 
         // We're ready to go! Connect to the server.
         Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_LOAD_ROUTES);
     }
 
-    /**
-     * Custom initialization.
-     */
-    _customInitialization() {}
-
+///////////////////////////////////////////////////////////////////////////////////////
+// PRIVATE METHODS
+///////////////////////////////////////////////////////////////////////////////////////
     /**
      * Set event binding.
      */
@@ -175,9 +177,6 @@ export default class Core
         {
             RODAN_EVENTS.enforceVersionCompatibility();
         }
-
-        // Check authentication.
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__AUTHENTICATION_CHECK); 
     }
 
     /**

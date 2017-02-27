@@ -12,20 +12,19 @@
     "url": "https://github.com/DDMAL/rodan-client-core/issues"
   },
   "scripts": {
+    "postinstall": "gulp build",
     "clean": "gulp clean",
     "start": "gulp",
-    "dist": "gulp dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretest": "node scripts/pretest.js",
     "postversion": "git push && git push --tags",
-    "preversion": "node scripts/preversion.js",
-    "prestart": "node scripts/prestart.js"
+    "preversion": "node scripts/preversion.js"
   },
   "author": {
     "name": "Distributed Digital Music Archives & Library Laboratory",
     "url": "http://ddmal.music.mcgill.ca/"
   },
-  "main": "dist/rodan_client_core.js",
+  "main": "build/rodan_client_core.js",
   "license": "ISC",
   "repository": {
     "type": "git",
