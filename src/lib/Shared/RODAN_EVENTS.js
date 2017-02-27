@@ -33,10 +33,6 @@ class RODAN_EVENTS
         _instance = this;
 
         /** @ignore */
-        this.REQUEST__RESOURCE_SHOWLAYOUTVIEW = 'REQUEST__RESOURCE_SHOWLAYOUTVIEW';  // Show LayoutView for Resource control (outside of the primary Resources view). This tells the ControllerResource which LayoutView to reference upon events. Takes {layoutView: LayoutView}.
-        /** @ignore */
-        this.REQUEST__RUNJOB_SHOWLAYOUTVIEW = 'REQUEST__RUNJOB_SHOWLAYOUTVIEW';      // Show LayoutView for RunJob control (outside of the primary RunJobs view). This tells the ControllerRunJob which LayoutView to reference upon events. Takes {layoutView: LayoutView}.
-        /** @ignore */
         this.EVENT__SERVER_WENTAWAY = 'EVENT__SERVER_WENTAWAY';                      // Called on server disconnect. No pass.
         /** @ignore */
         this.EVENT__SERVER_PANIC = 'EVENT__SERVER_PANIC';                            // Called when the app suspects that something went wrong.
@@ -70,30 +66,10 @@ class RODAN_EVENTS
         this.EVENT__CONFIGURATION_LOADED = 'EVENT__CONFIGURATION_LOADED';
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        // Context Menu
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /** Request context menu be hidden. */
-//        this.REQUEST__CONTEXTMENU_HIDE = 'REQUEST__CONTEXTMENU_HIDE';
-        /** Request context menu be shown. Takes {items: [{label: string, channel: string (Radio channel; default: 'rodan'), request: string (Radio request name), options: object (optional; options sent to Radio request)}], top: float (coordinate), left: float (coordinate)}. */
-//        this.REQUEST__CONTEXTMENU_SHOW = 'REQUEST__CONTEXTMENU_SHOW';
-
-        ///////////////////////////////////////////////////////////////////////////////////////
         // Download
         ///////////////////////////////////////////////////////////////////////////////////////
         /** Request a download to client machine be initiated. Takes {data: (data object/string/etc), mimetype: string (mime type), filename: string}. */
         this.REQUEST__DOWNLOAD_START = 'REQUEST__DOWNLOAD_START';
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // General
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /** Request "API" information to be show. */
-        this.REQUEST__SHOW_API = 'REQUEST__SHOW_API',
-        /** Request last 100 Radio events. Returns [{name (string), event (string), options (object)}]. */
-        this.REQUEST__LOG = 'REQUEST__LOG';
-        /** Request "About" information be shown. */
-        this.REQUEST__SHOW_ABOUT = 'REQUEST__SHOW_ABOUT';
-        /** Request "Help" page be shown. */
-        this.REQUEST__SHOW_HELP = 'REQUEST__SHOW_HELP';
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // Global Collections
@@ -120,12 +96,6 @@ class RODAN_EVENTS
         this.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION = 'REQUEST__GLOBAL_RESOURCETYPE_COLLECTION';
         /** Request load of ResourceTypes from server. Takes {data: {query parameters}}. */
         this.REQUEST__GLOBAL_RESOURCETYPES_LOAD = 'REQUEST__GLOBAL_RESOURCETYPES_LOAD';
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // Main Region
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /** Request main region be filled with provided Marionette View. Takes {view: Marionette.View}. */
-        this.REQUEST__MAINREGION_SHOW_VIEW = 'REQUEST__MAINREGION_SHOW_VIEW';
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // Model
@@ -298,10 +268,6 @@ class RODAN_EVENTS
         this.EVENT__WORKFLOW_DELETED = 'EVENT__WORKFLOW_DELETED';
         /** Triggered when Workflow has been saved. Sends {workflow: Workflow}. */
         this.EVENT__WORKFLOW_SAVED = 'EVENT__WORKFLOW_SAVED';
-        /** Triggered when the user selects an individual Workflow. Sends {workflow: Workflow}. */
-        this.EVENT__WORKFLOW_SELECTED = 'EVENT__WORKFLOW_SELECTED';
-        /** Triggered when the user selects to see all available Workflows. Sends {project: Project (Project associated with WorkflowCollection)}. */
-        this.EVENT__WORKFLOW_SELECTED_COLLECTION = 'EVENT__WORKFLOW_SELECTED_COLLECTION';
         /** Request a Workflow be created. Takes {project: Project}. */
         this.REQUEST__WORKFLOW_CREATE = 'REQUEST__WORKFLOW_CREATE';
         /** Request a Workflow be deleted. Takes {workflow: Workflow}. */
@@ -358,22 +324,6 @@ class RODAN_EVENTS
         this.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOBGROUP = 'REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOBGROUP';
         /** Request that future WorkflowJob creation automatically adds minimal ports. Takes {addports: boolean}. */
         this.REQUEST__WORKFLOWBUILDER_SET_ADDPORTS = 'REQUEST__WORKFLOWBUILDER_SET_ADDPORTS';
-        /** Request a Job collection view be displayed for adding Jobs to the currently loaded Workflow. Takes {workflow: Workflow}. */
-        this.REQUEST__WORKFLOWBUILDER_SHOW_JOBCOLLECTION_VIEW = 'REQUEST__WORKFLOWBUILDER_SHOW_JOBCOLLECTION_VIEW';
-        /** Request a resource assignment view be displayed for an InputPort. Takes {inputport: InputPort, workflow: Workflow}. */
-        this.REQUEST__WORKFLOWBUILDER_SHOW_RESOURCEASSIGNMENT_VIEW = 'REQUEST__WORKFLOWBUILDER_SHOW_RESOURCEASSIGNMENT_VIEW';
-        /** Request a Workflow data view be displayed for a Workflow. Takes {workflow: Workflow}. */
-        this.REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOW_VIEW = 'REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOW_VIEW';
-        /** Request a Workflow collection view be displayed for importing Workflows. Takes {workflow: Workflow}. */
-        this.REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWCOLLECTION_VIEW = 'REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWCOLLECTION_VIEW';
-        /** Request a port view for adding/deleting ports for a WorkflowJob be displayed. Takes {workflowjob: WorkflowJob, workflow: Workflow}. */
-        this.REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWJOB_PORTS_VIEW = 'REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWJOB_PORTS_VIEW';
-        /** Request a WorkflowJob settings view be displayed for a WorkflowJob. Takes {workflowjob: WorkflowJob, workflow: Workflow}. */
-        this.REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWJOB_SETTINGS_VIEW = 'REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWJOB_SETTINGS_VIEW';
-        /** Request a WorkflowJob data view be displayed for a WorkflowJob. Takes {workflowjob: WorkflowJob, workflow: Workflow}. */
-        this.REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWJOB_VIEW = 'REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWJOB_VIEW';
-        /** Request a WorkflowJobGroup data view be displayed for a WorkflowJobGroup. Takes {workflowjobgroup: WorkflowJobGroup, workflow: Workflow}. */
-        this.REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWJOBGROUP_VIEW = 'REQUEST__WORKFLOWBUILDER_SHOW_WORKFLOWJOBGROUP_VIEW';
         /** Request a Resource be unassigned to an InputPort. Takes {resource: Resource, inputport: InputPort, workflow: Workflow}. */
         this.REQUEST__WORKFLOWBUILDER_UNASSIGN_RESOURCE = 'REQUEST__WORKFLOWBUILDER_UNASSIGN_RESOURCE';
         /** Request a WorkflowJobGroup be removed from a Workflow, but keep all associated WorkflowJobs, ports, and Connections. Takes {workflowjobgroup: WorkflowJobGroup, workflow: Workflow}. */
@@ -428,10 +378,6 @@ class RODAN_EVENTS
         this.EVENT__WORKFLOWRUN_SAVED = 'EVENT__WORKFLOWRUN_SAVED';
         /** Triggered when WorkflowRun started. Sends {workflowrun: WorkflowRun}. */
         this.EVENT__WORKFLOWRUN_STARTED = 'EVENT__WORKFLOWRUN_STARTED';
-        /** Triggered when the user selects an individual WorkflowRun. Sends {workflow: WorkflowRun}. */
-        this.EVENT__WORKFLOWRUN_SELECTED = 'EVENT__WORKFLOWRUN_SELECTED';
-        /** Triggered when the user selects to see all available WorkflowRuns. Sends {project: Project (Project associated with WorkflowRunCollection)}. */
-        this.EVENT__WORKFLOWRUN_SELECTED_COLLECTION = 'EVENT__WORKFLOWRUN_SELECTED_COLLECTION';
         /** Request a WorkflowRun be created. Takes {workflow: Workflow, assignments: [string (Resource URLs or individual ResourceList URL)] (index by InputPort URLs)}. */
         this.REQUEST__WORKFLOWRUN_CREATE = 'REQUEST__WORKFLOWRUN_CREATE';
         /** Request a WorkflowRun be deleted. Takes {workflowrun: WorkflowRun}. */
