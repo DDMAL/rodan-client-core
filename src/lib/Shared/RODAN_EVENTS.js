@@ -73,9 +73,9 @@ class RODAN_EVENTS
         // Context Menu
         ///////////////////////////////////////////////////////////////////////////////////////
         /** Request context menu be hidden. */
-        this.REQUEST__CONTEXTMENU_HIDE = 'REQUEST__CONTEXTMENU_HIDE';
+//        this.REQUEST__CONTEXTMENU_HIDE = 'REQUEST__CONTEXTMENU_HIDE';
         /** Request context menu be shown. Takes {items: [{label: string, channel: string (Radio channel; default: 'rodan'), request: string (Radio request name), options: object (optional; options sent to Radio request)}], top: float (coordinate), left: float (coordinate)}. */
-        this.REQUEST__CONTEXTMENU_SHOW = 'REQUEST__CONTEXTMENU_SHOW';
+//        this.REQUEST__CONTEXTMENU_SHOW = 'REQUEST__CONTEXTMENU_SHOW';
 
         ///////////////////////////////////////////////////////////////////////////////////////
         // Download
@@ -128,18 +128,6 @@ class RODAN_EVENTS
         this.REQUEST__MAINREGION_SHOW_VIEW = 'REQUEST__MAINREGION_SHOW_VIEW';
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        // Modal
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /** Request an error be displayed. This is a "convenience" request -- if a modal is currently visible (which is probably related somehow to the error) the footer will be updated with the error message. If no modal visible, REQUEST__MODAL_SHOW will be called. Takes {content: Marionette.View OR string}. */
-        this.REQUEST__MODAL_ERROR = 'REQUEST__MODAL_ERROR';
-        /** Request modal window to hide/close. */
-        this.REQUEST__MODAL_HIDE = 'REQUEST__MODAL_HIDE';
-        /** Request modal window to show/open with provided Marionette View. If another modal is currently open the request will not show. Takes {content: string, title: string}. */
-        this.REQUEST__MODAL_SHOW = 'REQUEST__MODAL_SHOW';
-        /** Request the current modal window (if available) have the provided text set in the footer. If no modal is visible, will put message in REQUEST__MODAL_SHOW. Takes {content: Marionette.View OR string}. */
-        this.REQUEST__MODAL_SHOW_IMPORTANT = 'REQUEST__MODAL_SHOW_IMPORTANT';
-
-        ///////////////////////////////////////////////////////////////////////////////////////
         // Model
         //
         // In addition to the three events below, each model will fire its own custom events:
@@ -174,12 +162,6 @@ class RODAN_EVENTS
         this.EVENT__PROJECT_REMOVED_USER_WORKER = 'EVENT__PROJECT_REMOVED_USER_WORKER',
         /** Triggered when Project has been saved. Sends {project: Project}. */
         this.EVENT__PROJECT_SAVED = 'EVENT__PROJECT_SAVED';
-        /** Triggered when the user selects an individual Project. Sends {project: Project}. */
-        this.EVENT__PROJECT_SELECTED = 'EVENT__PROJECT_SELECTED';
-        /** Triggered when the user selects to see all available Projects. */
-        this.EVENT__PROJECT_SELECTED_COLLECTION = 'EVENT__PROJECT_SELECTED_COLLECTION';
-        /** Triggered when Project admin interface has been selected. Takes {project: Project}. */
-        this.EVENT__PROJECT_USERS_SELECTED = 'EVENT__PROJECT_USERS_SELECTED';
         /** Request a User be added as Project admin. Takes {project: Project, username: string} */
         this.REQUEST__PROJECT_ADD_USER_ADMIN = 'REQUEST__PROJECT_ADD_USER_ADMIN',
         /** Request a User be added as Project worker. Takes {project: Project, username: string} */
@@ -208,10 +190,6 @@ class RODAN_EVENTS
         this.EVENT__RESOURCE_DELETED = 'EVENT__RESOURCE_DELETED';
         /** Triggered when Resource saved. Sends {resource: Resource}. */
         this.EVENT__RESOURCE_SAVED = 'EVENT__RESOURCE_SAVED';
-        /** Triggered when the user selects an individual Resource. Sends {resource: Resource}. */
-        this.EVENT__RESOURCE_SELECTED = 'EVENT__RESOURCE_SELECTED';
-        /** Triggered when the user selects to see all available Resources. Sends {project: Project (Project associated with ResourceCollection)}. */
-        this.EVENT__RESOURCE_SELECTED_COLLECTION = 'EVENT__RESOURCE_SELECTED_COLLECTION';
         /** Request a Resource be created. Takes {project: Project, file: JavaScript File object}. */
         this.REQUEST__RESOURCE_CREATE = 'REQUEST__RESOURCE_CREATE';
         /** Request a Resource be deleted. Takes {resource: Resource}. */
@@ -226,44 +204,10 @@ class RODAN_EVENTS
         this.REQUEST__RESOURCES_LOAD = 'REQUEST__RESOURCES_LOAD';
 
         ///////////////////////////////////////////////////////////////////////////////////////
-        // ResourceList
-        ///////////////////////////////////////////////////////////////////////////////////////
-        /** Triggered when ResourceList has been created. Sends {resourcelist: ResourceList}. */
-        this.EVENT__RESOURCELIST_CREATED = 'EVENT__RESOURCELIST_CREATED';
-        /** Triggered when ResourceList deleted. Sends {resourcelist: ResourceList}. */
-        this.EVENT__RESOURCELIST_DELETED = 'EVENT__RESOURCELIST_DELETED';
-        /** Triggered when ResourceList saved. Sends {resourcelist: ResourceList}. */
-        this.EVENT__RESOURCELIST_SAVED = 'EVENT__RESOURCELIST_SAVED';
-        /** Triggered when the user selects an individual ResourceList. Sends {resourcelist: ResourceList}. */
-        this.EVENT__RESOURCELIST_SELECTED = 'EVENT__RESOURCELIST_SELECTED';
-        /** Triggered when the user selects to see all available ResourceLists. Sends {project: Project (Project associated with ResourceListCollection)}. */
-        this.EVENT__RESOURCELIST_SELECTED_COLLECTION = 'EVENT__RESOURCELIST_SELECTED_COLLECTION';
-        /** Request a Resource be added to a ResourceList. Takes {resource: Resource, resourcelist: ResourceList}. */
-        this.REQUEST__RESOURCELIST_ADD_RESOURCE = 'REQUEST__RESOURCELIST_ADD_RESOURCE';
-        /** Request a ResourceList be created. Takes {project: Project}. */
-        this.REQUEST__RESOURCELIST_CREATE = 'REQUEST__RESOURCELIST_CREATE';
-        /** Request a ResourceList be deleted. Takes {resourcelist: ResourceList}. */
-        this.REQUEST__RESOURCELIST_DELETE = 'REQUEST__RESOURCELIST_DELETE';
-        /** Request a ResourceList be downloaded. Takes {resourcelist: ResourceList}. */
-        this.REQUEST__RESOURCELIST_DOWNLOAD = 'REQUEST__RESOURCELIST_DOWNLOAD';
-        /** Request a Resource be removed from a ResourceList. Takes {resource: Resource, resourcelist: ResourceList}. */
-        this.REQUEST__RESOURCELIST_REMOVE_RESOURCE = 'REQUEST__RESOURCELIST_REMOVE_RESOURCE';
-        /** Request a ResourceList be saved/updated. Takes {resourcelist: ResourceList, fields: {object with attributes to change}}. */
-        this.REQUEST__RESOURCELIST_SAVE = 'REQUEST__RESOURCELIST_SAVE';
-        /** Request a resource assignment view be displayed for a ResourceList. Takes {resourcelist: ResourceList}. */
-        this.REQUEST__RESOURCELIST_SHOW_RESOURCEASSIGNMENT_VIEW = 'REQUEST__RESOURCELIST_SHOW_RESOURCEASSIGNMENT_VIEW';
-        /** Request a ResourceListCollection to be loaded. Takes {data: Object (query parameters)}. Returns ResourceListCollection. */
-        this.REQUEST__RESOURCELISTS_LOAD = 'REQUEST__RESOURCELISTS_LOAD';
-
-        ///////////////////////////////////////////////////////////////////////////////////////
         // RunJob
         ///////////////////////////////////////////////////////////////////////////////////////
         /** Triggered when interactive RunJob has been acquired by the current user. Sends {runjob: RunJob}. */
         this.EVENT__RUNJOB_ACQUIRED = 'EVENT__RUNJOB_ACQUIRED';
-        /** Triggered when the user selects an individual RunJob. Sends {runjob: RunJob}. */
-        this.EVENT__RUNJOB_SELECTED = 'EVENT__RUNJOB_SELECTED';
-        /** Triggered when the user selects to see RunJobs for a Project. */
-        this.EVENT__RUNJOB_SELECTED_COLLECTION = 'EVENT__RUNJOB_SELECTED_COLLECTION';
         /** Request the provided RunJob be locked on the server for the current user. Takes {runjob: RunJob}. */
         this.REQUEST__RUNJOB_ACQUIRE = 'REQUEST__RUNJOB_ACQUIRE';
         /** Request a RunJobCollection to be loaded. Takes {data: Object (query parameters)}. Returns RunJobCollection. */

@@ -5,15 +5,28 @@ import Radio from 'backbone.radio';
 // core includes
 import Configuration from 'core/Configuration';
 import ControllerAuthentication from 'core/Controllers/ControllerAuthentication';
+import ControllerDownload from 'core/Controllers/ControllerDownload';
+import ControllerProject from 'core/Controllers/ControllerProject';
+import ControllerResource from 'core/Controllers/ControllerResource';
+import ControllerRunJob from 'core/Controllers/ControllerRunJob';
 import ControllerServer from 'core/Controllers/ControllerServer';
+import ControllerUserPreference from 'core/Controllers/ControllerUserPreference';
+import ControllerWorkflow from 'core/Controllers/ControllerWorkflow';
+import ControllerWorkflowBuilder from 'core/Controllers/ControllerWorkflowBuilder';
+import ControllerWorkflowJob from 'core/Controllers/ControllerWorkflowJob';
+import ControllerWorkflowJobGroup from 'core/Controllers/ControllerWorkflowJobGroup';
+import ControllerWorkflowRun from 'core/Controllers/ControllerWorkflowRun';
+import ErrorManager from 'core/Managers/ErrorManager';
+import TransferManager from 'core/Managers/TransferManager';
+import UpdateManager from 'core/Managers/UpdateManager';
 
 // lib includes
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
 import GlobalInputPortTypeCollection from 'lib/Collections/Global/GlobalInputPortTypeCollection';
 import GlobalJobCollection from 'lib/Collections/Global/GlobalJobCollection';
 import GlobalOutputPortTypeCollection from 'lib/Collections/Global/GlobalOutputPortTypeCollection';
 import GlobalProjectCollection from 'lib/Collections/Global/GlobalProjectCollection';
 import GlobalResourceTypeCollection from 'lib/Collections/Global/GlobalResourceTypeCollection';
+import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
 
 let _instance = null;
 
@@ -66,6 +79,7 @@ export default class Core
         this._initializeCollections();
         this._initializeAjaxPrefilters();
         this._initializeControllers();
+        this._initializeManagers();
 
         // Get client info.
         Configuration.load('info.json');
@@ -95,23 +109,25 @@ export default class Core
     }
 
     /**
-     * Initialize controllers. These are not used for viewing; rather, they are server/auth control.
+     * Initialize controllers.
      */
     _initializeControllers()
     {
- //       this._downloadController = new ControllerDownload();
+        this._controllerAuthentication = new ControllerAuthentication();
+        this._controllerDownload = new ControllerDownload();
+        this._controllerProject = new ControllerProject();
+        this._controllerResource = new ControllerResource();
+        this._controllerRunJob = new ControllerRunJob();
         this._controllerServer = new ControllerServer();
-        this._controllerAuthentication = new ControllerAuthentication(this._controllerServer);
- //       this._projectController = new ControllerProject();
- //       this._resourceController = new ControllerResource();
+        this._controllerUserPreference = new ControllerUserPreference();
+        this._controllerWorkflow = new ControllerWorkflow();
+        this._controllerWorkflowBuilder = new ControllerWorkflowBuilder();
+        this._controllerWorkflowJob = new ControllerWorkflowJob();
+        this._controllerWorkflowJobGroup = new ControllerWorkflowJobGroup();
+        this._controllerWorkflowRun = new ControllerWorkflowRun();
+
+
  //       this._resourceListController = new ControllerResourceList();
- //       this._runJobController = new ControllerRunJob();
- //       this._userPreferenceController = new ControllerUserPreference();
- //       this._workflowController = new ControllerWorkflow();
- //       this._workflowRunController = new ControllerWorkflowRun();
- //       this._workflowBuilderController = new ControllerWorkflowBuilder();
- //       this._workflowJobController = new ControllerWorkflowJob();
- //       this._workflowJobGroupController = new ControllerWorkflowJobGroup();
     }
 
     /**
@@ -140,14 +156,20 @@ export default class Core
     }
 
     /**
+     * Initialize managers.
+     */
+    _initializeManagers()
+    {
+        this._managerError = new ErrorManager();
+        this._managerTransfer = new TransferManager();
+        this._managerUpdater = new UpdateManager();
+    }
+
+    /**
      * Handle EVENT__SERVER_ROUTESLOADED.
      */
     _handleEventRoutesLoaded()
     {
-        // Render layout views.
-        /** @ignore */
- //       this.regionMaster.show(this._layoutViewMaster);
-        
         // Do version compatibility trimming.
         if (Configuration.ENFORCE_VERSION_COMPATIBILITY)
         {
@@ -170,6 +192,5 @@ export default class Core
         Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_OUTPUTPORTTYPES_LOAD);
         Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_RESOURCETYPES_LOAD);
         Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_JOBS_LOAD, {data: {enabled: 'True'}});
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__PROJECT_SELECTED_COLLECTION); 
     }
 }

@@ -7,8 +7,12 @@ console.log(rodan);
 rodan.channel.on(rodan.events.EVENT__SERVER_ROUTESLOADED, function()
 {
 	rodan.config.DEBUG = true;
-	console.log('here');
 	rodan.channel.request(rodan.events.REQUEST__AUTHENTICATION_LOGIN, {username: 'test', password: 'test'});
+
+	// Test projects...
+	//
+
+	
 });
 
 // Try to start.
