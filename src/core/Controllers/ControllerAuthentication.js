@@ -79,8 +79,6 @@ export default class ControllerAuthentication extends BaseController
      */
     _initializeRadio()
     {
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__USER_SAVED, (options) => this._handleEventGeneric(options));
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__USER_CHANGED_PASSWORD, (options) => this._handleEventGeneric(options));
         Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__USER_CHANGE_PASSWORD, (options) => this._handleRequestChangePassword(options));
         Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__USER_SAVE, (options) => this._handleRequestSaveUser(options));
 
@@ -307,14 +305,6 @@ export default class ControllerAuthentication extends BaseController
     }
 
     /**
-     * Handle event generic.
-     */
-    _handleEventGeneric()
-    {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__MODAL_HIDE);
-    }
-
-    /**
      * Handle request save User.
      */
     _handleRequestSaveUser(options)
@@ -327,7 +317,6 @@ export default class ControllerAuthentication extends BaseController
                             dataType: 'json',
                             data: options.fields};
         Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__MODAL_SHOW_IMPORTANT, {title: 'Saving User', content: 'Please wait...'});
     }
 
     /**
@@ -343,7 +332,6 @@ export default class ControllerAuthentication extends BaseController
                          //   dataType: 'json',
                             data: {new_password: options.newpassword, current_password: options.currentpassword}};
         Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__MODAL_SHOW_IMPORTANT, {title: 'Saving password', content: 'Please wait...'});
     }
 
     /**

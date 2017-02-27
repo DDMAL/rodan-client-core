@@ -44,7 +44,6 @@ var webpackConfig =
     {
         filename: OUTPUT_FILE,
         library: LIBRARY_NAME,
-        libraryTarget: LIBRARY_TARGET,
         path: path.resolve(__dirname, BUILD_ROOT)
     },
     module: 
@@ -89,6 +88,7 @@ gulp.task('build:mkdir', ['build:clean'], function(callback)
  */
 gulp.task('build', ['build:mkdir'], function(callback)
 {
+    webpackConfig.output.libraryTarget = LIBRARY_TARGET;
     webpack(webpackConfig, function(error, data)
     {
         if (error)
@@ -145,11 +145,9 @@ gulp.task('test:info', ['test:mkdir'], function(callback)
  */
 gulp.task('test:link', ['test:mkdir'], function()
 {
-    return gulp.src([CONFIGURATION_FILE, 
-                     TEST_DIRECTORY + '/index.html', 
+    return gulp.src([TEST_DIRECTORY + '/index.html', 
                      TEST_DIRECTORY + '/test.js'])
-               .pipe(symlink([TEST_WEBROOT + '/' + CONFIGURATION_FILE,
-                              TEST_WEBROOT + '/index.html',
+               .pipe(symlink([TEST_WEBROOT + '/index.html',
                               TEST_WEBROOT + '/test.js'], {force: true}));
 });
 

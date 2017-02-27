@@ -46,7 +46,10 @@ export default class UpdateManager
      */
     _handleRequestUpdateSetFunction(options)
     {
-        this._updater.setCollections(options.collections);
+        if (this._updater)
+        {
+            this._updater.setCollections(options.collections);  
+        }
     }
 
     /**
@@ -54,6 +57,9 @@ export default class UpdateManager
      */
     _handleRequestUpdateClear(options)
     {
-        this._updater.clear();
+        if (this._updater)
+        {
+            this._updater.clear(); 
+        }
     }
 }

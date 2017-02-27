@@ -28,7 +28,7 @@ export default class ControllerWorkflowJobGroup extends BaseController
      */
     _initializeRadio()
     {
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_CREATE, (options) => this._handleRequestCreateWorkflowJobGroup(options));
+//        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_CREATE, (options) => this._handleRequestCreateWorkflowJobGroup(options));
         Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_DELETE, (options) => this._handleRequestDeleteWorkflowJobGroup(options));
         Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_GET_PORTS, (options) => this._handleRequestGetPorts(options));
         Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_IMPORT, (options) => this._handleRequestImportWorkflowJobGroup(options));
