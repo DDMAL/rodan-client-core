@@ -100,7 +100,7 @@ export default class ControllerWorkflow extends BaseController
      */
     _handleCreateSuccess(model, collection)
     {
-        collection.add(model);
+ //       collection.add(model);
         Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOW_CREATED, {workflow: model});
     }
 
@@ -109,7 +109,7 @@ export default class ControllerWorkflow extends BaseController
      */
     _handleDeleteSuccess(model, collection)
     {
-        collection.remove(model);
+  //      collection.remove(model);
         Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOW_DELETED, {workflow: model});
     }
 
@@ -127,7 +127,7 @@ export default class ControllerWorkflow extends BaseController
      */
     _handleImportSuccess(model, collection)
     {
-        collection.add(model, {});
+ //       collection.add(model, {});
         Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOW_CREATED, {workflow: model});
     }
 }
