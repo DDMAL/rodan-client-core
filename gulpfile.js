@@ -23,9 +23,7 @@ const TEST_DIRECTORY = 'test';
 // CONFIGURATION - build
 // NOTE: don't edit this unless you know what you're doing.
 ////////////////////////////////////////////////////////////////////////////////
-const BUILD_ROOT = 'build';
-const CONFIGURATION_FILE = 'configuration.json';
-const CONFIGURATION_EXAMPLE_FILE = 'configuration.example.json';
+const BUILD_ROOT = 'dist';
 const ENTRY_FILE = './src/index.js';
 const INFO_FILE = 'info.json';
 const LIBRARY_NAME = 'rodan-client-core';

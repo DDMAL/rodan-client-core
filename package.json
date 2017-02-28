@@ -12,7 +12,7 @@
     "url": "https://github.com/DDMAL/rodan-client-core/issues"
   },
   "scripts": {
-    "postinstall": "gulp build",
+    "build": "gulp build",
     "clean": "gulp clean",
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -24,7 +24,7 @@
     "name": "Distributed Digital Music Archives & Library Laboratory",
     "url": "http://ddmal.music.mcgill.ca/"
   },
-  "main": "build/rodan_client_core.js",
+  "main": "dist/rodan_client_core.js",
   "license": "ISC",
   "repository": {
     "type": "git",
