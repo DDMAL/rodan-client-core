@@ -303,7 +303,7 @@ export default class BaseCollection extends Backbone.Collection
     {
         var options = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_GET_ROUTE_OPTIONS, {route: this.route});
         var items = response.results ? response.results : response;
-        for (var [field, enumeration] of this._enumerations)
+        this._enumerations.forEach(function(enumeration, field)
         {
             // If no enumerations, let's try to populate via routes. If that doesn't work, auto-populate.
             if (!enumeration.values || enumeration.values.length === 0)
@@ -344,7 +344,8 @@ export default class BaseCollection extends Backbone.Collection
                     return 0;
                 });
             }
-        }
+ //       }
+        }, this);
     }
 
     /**
