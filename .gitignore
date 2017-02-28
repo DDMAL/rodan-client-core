@@ -2,7 +2,7 @@
 .DS_Store
 npm-debug.log
 node_modules/
-build
+dist
 configuration.json
 ._*
 __*

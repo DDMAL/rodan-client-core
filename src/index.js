@@ -95,4 +95,4 @@ const defaultExport =
 	WorkflowRun: WorkflowRun,
 };
 
-export default function() { return defaultExport; };
+export default defaultExport;
