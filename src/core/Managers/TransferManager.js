@@ -1,6 +1,6 @@
 import Backbone from 'backbone';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 
 /**
  * File transfer manager. This manages all file (i.e. Resource) uploads and downloads.
@@ -29,9 +29,9 @@ export default class TransferManager
      */
     _initializeRadio()
     {
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__TRANSFERMANAGER_DOWNLOAD, options => this._handleRequestDownload(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__TRANSFERMANAGER_GET_UPLOAD_COUNT, () => this._handleRequestGetUploadCount());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__TRANSFERMANAGER_MONITOR_UPLOAD, options => this._handleRequestMonitorUpload(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__TRANSFERMANAGER_DOWNLOAD, options => this._handleRequestDownload(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__TRANSFERMANAGER_GET_UPLOAD_COUNT, () => this._handleRequestGetUploadCount());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__TRANSFERMANAGER_MONITOR_UPLOAD, options => this._handleRequestMonitorUpload(options));
     }
 
     /**
@@ -75,7 +75,7 @@ export default class TransferManager
     {
         var upload = this._uploadsPending.remove(jqXHR.id);
         this._uploadsCompleted.add(upload);
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__TRANSFERMANAGER_UPLOAD_SUCCEEDED, {request: upload.jqXHR, file: upload.file});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__TRANSFERMANAGER_UPLOAD_SUCCEEDED, {request: upload.jqXHR, file: upload.file});
     }
 
     /**
@@ -85,7 +85,7 @@ export default class TransferManager
     {
         var upload = this._uploadsPending.remove(jqXHR.id);
         this._uploadsFailed.add(upload);
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__TRANSFERMANAGER_UPLOAD_FAILED, {request: upload.jqXHR, file: upload.file});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__TRANSFERMANAGER_UPLOAD_FAILED, {request: upload.jqXHR, file: upload.file});
     }
 
     /**
@@ -117,7 +117,7 @@ export default class TransferManager
 
             case 4:
             {
-                Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__DOWNLOAD_START, {data: request.currentTarget.response, filename: filename, mimetype: mimetype});
+                Radio.channel('rodan-client-core').request(Events.REQUEST__DOWNLOAD_START, {data: request.currentTarget.response, filename: filename, mimetype: mimetype});
                 break;
             }
 

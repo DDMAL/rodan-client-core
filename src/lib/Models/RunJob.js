@@ -1,5 +1,5 @@
 import BaseModel from './BaseModel';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Events';
 import Radio from 'backbone.radio';
 
 /**
@@ -26,10 +26,10 @@ export default class RunJob extends BaseModel
      */
     available()
     {
-        var currentUser = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__AUTHENTICATION_USER);
+        var currentUser = Radio.channel('rodan-client-core').request(Events.REQUEST__AUTHENTICATION_USER);
         if (this.get('interactive_acquire') !== null && this.get('status') === 2)
         {
-            var serverDate = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_DATE);
+            var serverDate = Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_DATE);
             var expiryDate = new Date(this.get('working_user_expiry'));
             if (this.get('working_user') === null ||
                 this.get('working_user') === currentUser.get('url') ||

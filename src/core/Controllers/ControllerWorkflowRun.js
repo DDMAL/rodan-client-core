@@ -1,6 +1,6 @@
 import BaseController from './BaseController';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 import WorkflowRun from 'lib/Models/WorkflowRun';
 import WorkflowRunCollection from 'lib/Collections/WorkflowRunCollection';
 
@@ -17,10 +17,10 @@ export default class ControllerWorkflowRun extends BaseController
      */
     _initializeRadio()
     {
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWRUN_CREATE, options => this._handleRequestWorkflowRunCreate(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWRUN_DELETE, options => this._handleRequestWorkflowRunDelete(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWRUN_SAVE, options => this._handleRequestWorkflowRunSave(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWRUN_START, options => this._handleRequestWorkflowRunStart(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWRUN_CREATE, options => this._handleRequestWorkflowRunCreate(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWRUN_DELETE, options => this._handleRequestWorkflowRunDelete(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWRUN_SAVE, options => this._handleRequestWorkflowRunSave(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWRUN_START, options => this._handleRequestWorkflowRunStart(options), this);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,7 @@ export default class ControllerWorkflowRun extends BaseController
                                            resource_assignments: options.assignments,
                                            name: name,
                                            description: description});
-        workflowRun.save({}, {success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWRUN_CREATED, {workflowrun: model})});
+        workflowRun.save({}, {success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWRUN_CREATED, {workflowrun: model})});
     }
 
     /**
@@ -45,7 +45,7 @@ export default class ControllerWorkflowRun extends BaseController
      */
     _handleRequestWorkflowRunDelete(options)
     {
-        options.workflowrun.destroy({success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWRUN_DELETED, {workflowrun: model})});
+        options.workflowrun.destroy({success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWRUN_DELETED, {workflowrun: model})});
     }
 
     /**
@@ -54,7 +54,7 @@ export default class ControllerWorkflowRun extends BaseController
     _handleRequestWorkflowRunSave(options)
     {
         options.workflowrun.save(options.workflowrun.changed,
-                                 {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWRUN_SAVED, {workflowrun: model})});
+                                 {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWRUN_SAVED, {workflowrun: model})});
     }
 
     /**
@@ -64,7 +64,7 @@ export default class ControllerWorkflowRun extends BaseController
     {
         options.workflowrun.set({status: 21});
         options.workflowrun.save(options.workflowrun.changed,
-                                 {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWRUN_STARTED, {workflowrun: model})});
+                                 {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWRUN_STARTED, {workflowrun: model})});
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////

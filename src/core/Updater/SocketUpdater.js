@@ -1,7 +1,7 @@
 import AbstractUpdater from './AbstractUpdater';
 import Configuration from 'core/Configuration';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 
 /**
  * Updater that uses sockets to trigger collection updates.
@@ -73,7 +73,7 @@ export default class SocketUpdater extends AbstractUpdater
         }
         else if (data.project)
         {
-            var activeProject = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__PROJECT_GET_ACTIVE);
+            var activeProject = Radio.channel('rodan-client-core').request(Events.REQUEST__PROJECT_GET_ACTIVE);
             if (activeProject && data.project === activeProject.id)
             {
                 this.update();

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import BaseController from './BaseController';
 import Configuration from 'core/Configuration';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 import Radio from 'backbone.radio';
 import UserPreference from 'lib/Models/UserPreference';
 import UserPreferenceCollection from 'lib/Collections/UserPreferenceCollection';
@@ -33,9 +33,9 @@ export default class ControllerUserPreference extends BaseController
     {
         /** @ignore */
         this._collection = new UserPreferenceCollection();
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__AUTHENTICATION_LOGIN_SUCCESS, (options) => this._handleEventAuthenticationSuccess(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__USER_PREFERENCE, (options) => this._handleRequestUserPreference(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__USER_PREFERENCE_SAVE, (options) => this._handleRequestUserPreferenceSave(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__AUTHENTICATION_LOGIN_SUCCESS, (options) => this._handleEventAuthenticationSuccess(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__USER_PREFERENCE, (options) => this._handleRequestUserPreference(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__USER_PREFERENCE_SAVE, (options) => this._handleRequestUserPreferenceSave(options));
     }
 
     /**
@@ -61,7 +61,7 @@ export default class ControllerUserPreference extends BaseController
         else
         {
             this._userPreference = userPreference;
-            Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__USER_PREFERENCE_LOADED, {user_preference: this._userPreference});
+            Radio.channel('rodan-client-core').trigger(Events.EVENT__USER_PREFERENCE_LOADED, {user_preference: this._userPreference});
         }
     }
 
@@ -81,7 +81,7 @@ export default class ControllerUserPreference extends BaseController
         if (!$.isEmptyObject(options.user_preference.changed))
         {
             options.user_preference.save(options.user_preference.changed,
-                                         {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__USER_PREFERENCE_SAVED, {user_preference: options.user_preference})});
+                                         {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__USER_PREFERENCE_SAVED, {user_preference: options.user_preference})});
         }
     }
 }

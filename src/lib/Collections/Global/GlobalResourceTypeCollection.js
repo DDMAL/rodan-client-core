@@ -1,5 +1,5 @@
 import GlobalCollection from './GlobalCollection';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Events';
 import ResourceType from 'lib/Models/ResourceType';
 
 let _instance = null;
@@ -28,7 +28,7 @@ export default class GlobalResourceTypeCollection extends GlobalCollection
         /** @ignore */
         this.model = ResourceType;
         this._route = 'resourcetypes';
-        this._loadCommand = RODAN_EVENTS.REQUEST__GLOBAL_RESOURCETYPES_LOAD;
-        this._requestCommand = RODAN_EVENTS.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION;
+        this._loadCommand = Events.REQUEST__GLOBAL_RESOURCETYPES_LOAD;
+        this._requestCommand = Events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION;
     }
 }

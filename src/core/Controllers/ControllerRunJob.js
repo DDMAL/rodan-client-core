@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
 import Configuration from 'core/Configuration';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 import RunJobCollection from 'lib/Collections/RunJobCollection';
 
 /**
@@ -29,8 +29,8 @@ export default class ControllerRunJob extends BaseController
      */
     _initializeRadio()
     {
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__RUNJOB_ACQUIRE, options => this._handleRequestAcquire(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__RUNJOBS_LOAD, options => this._handleRequestRunJobs(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__RUNJOB_ACQUIRE, options => this._handleRequestAcquire(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__RUNJOBS_LOAD, options => this._handleRequestRunJobs(options));
     }
 
     /**
@@ -39,7 +39,7 @@ export default class ControllerRunJob extends BaseController
     _handleRequestAcquire(options)
     {
         // Get lock if available. Else, if we already have the lock, simply open the interface.
-        var user = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__AUTHENTICATION_USER);
+        var user = Radio.channel('rodan-client-core').request(Events.REQUEST__AUTHENTICATION_USER);
         var runJobUrl = options.runjob.get('url');
         if (options.runjob.available())
         {
@@ -50,7 +50,7 @@ export default class ControllerRunJob extends BaseController
                 success: (response) => this._handleSuccessAcquire(response, runJobUrl, options.runjob),
                 error: () => this._removeRunJobLock(runJobUrl)
             };
-            Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
+            Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
         }
         else if (options.runjob.get('working_user') === user.get('url'))
         {
@@ -65,7 +65,7 @@ export default class ControllerRunJob extends BaseController
     _handleSuccessAcquire(response, runJobUrl, runJob)
     {
 //        this._registerRunJobForReacquire(runJobUrl, response.working_url, runJob.get('interactive_acquire'));
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__RUNJOB_ACQUIRED, {runjob: runJob});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__RUNJOB_ACQUIRED, {runjob: runJob});
         this._openRunJobInterface(response.working_url);
     }
 

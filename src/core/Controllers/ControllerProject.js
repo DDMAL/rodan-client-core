@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
 import Project from 'lib/Models/Project';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 import UserCollection from 'lib/Collections/UserCollection';
 import WorkflowRunCollection from 'lib/Collections/WorkflowRunCollection';
 
@@ -30,24 +30,24 @@ export default class ControllerProject extends BaseController
     _initializeRadio()
     {
         // Events.
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__PROJECT_ADDED_USER_ADMIN, options => this._handleEventProjectAddedUserAdmin(options));
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__PROJECT_ADDED_USER_WORKER, options => this._handleEventProjectAddedUserWorker(options));
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__PROJECT_CREATED, options => this._handleEventProjectGenericResponse(options));
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__PROJECT_DELETED, options => this._handleEventProjectDeleteResponse(options));
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__PROJECT_REMOVED_USER_ADMIN, options => this._handleEventProjectRemovedUser(options));
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__PROJECT_REMOVED_USER_WORKER, options => this._handleEventProjectRemovedUser(options));
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__PROJECT_SAVED, options => this._handleEventProjectGenericResponse(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__PROJECT_ADDED_USER_ADMIN, options => this._handleEventProjectAddedUserAdmin(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__PROJECT_ADDED_USER_WORKER, options => this._handleEventProjectAddedUserWorker(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__PROJECT_CREATED, options => this._handleEventProjectGenericResponse(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__PROJECT_DELETED, options => this._handleEventProjectDeleteResponse(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__PROJECT_REMOVED_USER_ADMIN, options => this._handleEventProjectRemovedUser(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__PROJECT_REMOVED_USER_WORKER, options => this._handleEventProjectRemovedUser(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__PROJECT_SAVED, options => this._handleEventProjectGenericResponse(options));
 
         // Requests.
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_ADD_USER_ADMIN, (options) => this._handleRequestProjectAddUserAdmin(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_ADD_USER_WORKER, (options) => this._handleRequestProjectAddUserWorker(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_GET_ACTIVE, () => this._handleRequestProjectActive());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_CREATE, options => this._handleRequestCreateProject(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_SET_ACTIVE, options => this._handleRequestSetActiveProject(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_SAVE, options => this._handleRequestProjectSave(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_DELETE, options => this._handleRequestProjectDelete(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_REMOVE_USER_ADMIN, options => this._handleRequestRemoveUserAdmin(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__PROJECT_REMOVE_USER_WORKER, options => this._handleRequestRemoveUserWorker(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_ADD_USER_ADMIN, (options) => this._handleRequestProjectAddUserAdmin(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_ADD_USER_WORKER, (options) => this._handleRequestProjectAddUserWorker(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_GET_ACTIVE, () => this._handleRequestProjectActive());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_CREATE, options => this._handleRequestCreateProject(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_SET_ACTIVE, options => this._handleRequestSetActiveProject(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_SAVE, options => this._handleRequestProjectSave(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_DELETE, options => this._handleRequestProjectDelete(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_REMOVE_USER_ADMIN, options => this._handleRequestRemoveUserAdmin(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__PROJECT_REMOVE_USER_WORKER, options => this._handleRequestRemoveUserWorker(options));
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ export default class ControllerProject extends BaseController
      */
     _handleEventProjectGenericResponse()
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_PROJECTS_LOAD, {});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_PROJECTS_LOAD, {});
     }
 
     /**
@@ -66,7 +66,7 @@ export default class ControllerProject extends BaseController
      */
     _handleEventProjectDeleteResponse()
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_PROJECTS_LOAD, {});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_PROJECTS_LOAD, {});
     }
 
     /**
@@ -74,7 +74,7 @@ export default class ControllerProject extends BaseController
      */
     _handleRequestProjectSave(options)
     {
-        options.project.save(options.fields, {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__PROJECT_SAVED, {project: model})});
+        options.project.save(options.fields, {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__PROJECT_SAVED, {project: model})});
     }
 
     /**
@@ -83,7 +83,7 @@ export default class ControllerProject extends BaseController
     _handleRequestCreateProject(options)
     {
         var project = new Project({creator: options.user});
-        project.save({}, {success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__PROJECT_CREATED, {project: model})});
+        project.save({}, {success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__PROJECT_CREATED, {project: model})});
     }
 
     /**
@@ -92,7 +92,7 @@ export default class ControllerProject extends BaseController
     _handleRequestProjectDelete(options)
     {
         this._activeProject = null;
-        options.project.destroy({success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__PROJECT_DELETED, {project: model})});
+        options.project.destroy({success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__PROJECT_DELETED, {project: model})});
     }
 
     /**
@@ -143,13 +143,13 @@ export default class ControllerProject extends BaseController
                 admins.splice(userIndex, 1);
                 var usersSendObject = {};
                 admins.map(function(value) { usersSendObject[value] = value; return value; });
-                var ajaxSettings = {success: (response) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__PROJECT_REMOVED_USER_ADMIN, {project: options.project}),
-                                    error: (response) => Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
+                var ajaxSettings = {success: (response) => Radio.channel('rodan-client-core').trigger(Events.EVENT__PROJECT_REMOVED_USER_ADMIN, {project: options.project}),
+                                    error: (response) => Radio.channel('rodan-client-core').request(Events.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
                                     type: 'PUT',
                                     dataType: 'json',
                                     data: usersSendObject,
                                     url: options.project.get('url') + 'admins/'};
-                Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
+                Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
             }
         }
     }
@@ -170,13 +170,13 @@ export default class ControllerProject extends BaseController
                 users.splice(userIndex, 1);
                 var usersSendObject = {};
                 users.map(function(value) { usersSendObject[value] = value; return value; });
-                var ajaxSettings = {success: (response) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__PROJECT_REMOVED_USER_WORKER, {project: options.project}),
-                                    error: (response) => Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
+                var ajaxSettings = {success: (response) => Radio.channel('rodan-client-core').trigger(Events.EVENT__PROJECT_REMOVED_USER_WORKER, {project: options.project}),
+                                    error: (response) => Radio.channel('rodan-client-core').request(Events.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
                                     type: 'PUT',
                                     dataType: 'json',
                                     data: usersSendObject,
                                     url: options.project.get('url') + 'workers/'};
-                Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
+                Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
             }
         }
     }
@@ -198,13 +198,13 @@ export default class ControllerProject extends BaseController
         users.push(options.username);
         var usersSendObject = {};
         users.map(function(value) { usersSendObject[value] = value; return value; });
-        var ajaxSettings = {success: (response) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__PROJECT_ADDED_USER_ADMIN, {project: options.project}),
-                            error: (response) => Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
+        var ajaxSettings = {success: (response) => Radio.channel('rodan-client-core').trigger(Events.EVENT__PROJECT_ADDED_USER_ADMIN, {project: options.project}),
+                            error: (response) => Radio.channel('rodan-client-core').request(Events.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
                             type: 'PUT',
                             dataType: 'json',
                             data: usersSendObject,
                             url: options.project.get('url') + 'admins/'};
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
      }
 
     /**
@@ -216,13 +216,13 @@ export default class ControllerProject extends BaseController
         users.push(options.username);
         var usersSendObject = {};
         users.map(function(value) { usersSendObject[value] = value; return value; });
-        var ajaxSettings = {success: (response) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__PROJECT_ADDED_USER_WORKER, {project: options.project}),
-                            error: (response) => Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
+        var ajaxSettings = {success: (response) => Radio.channel('rodan-client-core').trigger(Events.EVENT__PROJECT_ADDED_USER_WORKER, {project: options.project}),
+                            error: (response) => Radio.channel('rodan-client-core').request(Events.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
                             type: 'PUT',
                             dataType: 'json',
                             data: usersSendObject,
                             url: options.project.get('url') + 'workers/'};
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettings});
     }
 
     /**

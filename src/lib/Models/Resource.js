@@ -3,7 +3,7 @@ import Radio from 'backbone.radio';
 import _ from 'underscore';
 
 import BaseModel from './BaseModel';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Events';
 
 /**
  * Resource.
@@ -115,7 +115,7 @@ export default class Resource extends BaseModel
      */
     _updateResourceTypeFull()
     {
-        var resourceTypeCollection = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
+        var resourceTypeCollection = Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
         var resourceTypeId = this.getResourceTypeUuid();
         var jsonString = {};
         if (resourceTypeId !== null)

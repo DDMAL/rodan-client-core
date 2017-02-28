@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 
 /**
  * Client configuration object.
@@ -162,7 +162,7 @@ Configuration._handleStateChange = function(event, filename, callback)
         {
             var configuration = JSON.parse(request.response);
             $.extend(this, configuration);
-            Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__CONFIGURATION_LOADED);
+            Radio.channel('rodan-client-core').trigger(Events.EVENT__CONFIGURATION_LOADED);
             if (callback)
             {
                 callback();

@@ -1,7 +1,7 @@
 import Configuration from 'core/Configuration';
 import PollUpdater from 'core/Updater/PollUpdater';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 import SocketUpdater from 'core/Updater/SocketUpdater';
 
 /**
@@ -18,9 +18,9 @@ export default class UpdateManager
     constructor()
     {
         this._updater = null;
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__CONFIGURATION_LOADED, () => this._handleEventConfigurationLoaded());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__UPDATER_SET_COLLECTIONS, (options) => this._handleRequestUpdateSetFunction(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__UPDATER_CLEAR, () => this._handleRequestUpdateClear());
+        Radio.channel('rodan-client-core').on(Events.EVENT__CONFIGURATION_LOADED, () => this._handleEventConfigurationLoaded());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__UPDATER_SET_COLLECTIONS, (options) => this._handleRequestUpdateSetFunction(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__UPDATER_CLEAR, () => this._handleRequestUpdateClear());
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////

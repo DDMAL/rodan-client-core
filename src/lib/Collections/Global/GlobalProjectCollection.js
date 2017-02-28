@@ -1,5 +1,5 @@
 import GlobalCollection from './GlobalCollection';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Events';
 import Project from 'lib/Models/Project';
 
 let _instance = null;
@@ -29,7 +29,7 @@ export default class GlobalProjectCollection extends GlobalCollection
         this.model = Project;
         this._route = 'projects';
         this._allowPagination = true;
-        this._loadCommand = RODAN_EVENTS.REQUEST__GLOBAL_PROJECTS_LOAD;
-        this._requestCommand = RODAN_EVENTS.REQUEST__GLOBAL_PROJECT_COLLECTION;
+        this._loadCommand = Events.REQUEST__GLOBAL_PROJECTS_LOAD;
+        this._requestCommand = Events.REQUEST__GLOBAL_PROJECT_COLLECTION;
     }
 }

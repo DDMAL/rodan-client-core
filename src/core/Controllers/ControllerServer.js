@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 import BaseController from './BaseController';
 import Configuration from 'core/Configuration';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 
 var oldsync = Backbone.sync;
 Backbone.sync = function(method, model, options) { 'use strict'; return oldsync(method, model, options); };
@@ -63,7 +63,7 @@ export default class ControllerServer extends BaseController
 
             // Increment pending requests.
             that._pendingRequests++;
-            Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_REQUESTS_PENDING_UPDATE, {pending: that._pendingRequests});
+            Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_REQUESTS_PENDING_UPDATE, {pending: that._pendingRequests});
         };
     }
 
@@ -96,15 +96,15 @@ export default class ControllerServer extends BaseController
      */
     _initializeRadio()
     {
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_CONFIGURATION, () => this._handleRequestConfiguration());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_DATE, () => this._handleRequestDate());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_LOAD_ROUTES, () => this._getRoutes());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_LOAD_ROUTE_OPTIONS, () => this._handleGetRouteOptions());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_GET_ROUTE, routeName => this._handleRequestServerRoute(routeName));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_GET_ROUTE_OPTIONS, options => this._handleRequestServerRouteOptions(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_GET_HOSTNAME, () => this._handleRequestServerHostname());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_GET_VERSION, () => this._handleRequestServerVersionRodan());
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SERVER_REQUEST_AJAX, (options) => this._handleRequestAjax(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_CONFIGURATION, () => this._handleRequestConfiguration());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_DATE, () => this._handleRequestDate());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_LOAD_ROUTES, () => this._getRoutes());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_LOAD_ROUTE_OPTIONS, () => this._handleGetRouteOptions());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_GET_ROUTE, routeName => this._handleRequestServerRoute(routeName));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_GET_ROUTE_OPTIONS, options => this._handleRequestServerRouteOptions(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_GET_HOSTNAME, () => this._handleRequestServerHostname());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_GET_VERSION, () => this._handleRequestServerVersionRodan());
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SERVER_REQUEST_AJAX, (options) => this._handleRequestAjax(options));
     }
 
     /**
@@ -174,7 +174,7 @@ export default class ControllerServer extends BaseController
                 {
                     this._server.routes[routeName] = {url: this._server.routes[routeName]};
                 }
-                Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_ROUTESLOADED);
+                Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_ROUTESLOADED);
             }
             else
             {
@@ -266,7 +266,7 @@ export default class ControllerServer extends BaseController
     {
         // Decrement the pending requests.
         this._pendingRequests--;
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_REQUESTS_PENDING_UPDATE, {pending: this._pendingRequests});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_REQUESTS_PENDING_UPDATE, {pending: this._pendingRequests});
 
         if (document.readyState === 'complete' && this._pendingRequests === 0)
         {
@@ -281,7 +281,7 @@ export default class ControllerServer extends BaseController
         }
         else if (this._waitingEventTriggered)
         {
-            Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_WAITING, {pending: this._pendingRequests});
+            Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_WAITING, {pending: this._pendingRequests});
         }
 
         // Get the time.
@@ -310,7 +310,7 @@ export default class ControllerServer extends BaseController
     _sendWaitingNotification()
     {
         this._waitingEventTriggered = true;
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_WAITING, {pending: this._pendingRequests});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_WAITING, {pending: this._pendingRequests});
     }
 
     /**
@@ -319,7 +319,7 @@ export default class ControllerServer extends BaseController
     _sendIdleNotification()
     {
         this._waitingEventTriggered = false;
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_IDLE);
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_IDLE);
     }
 
     /**
@@ -327,7 +327,7 @@ export default class ControllerServer extends BaseController
      */
     _sendPanicNotification()
     {
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_PANIC);
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_PANIC);
     }
 
     /**
@@ -352,7 +352,7 @@ export default class ControllerServer extends BaseController
     _updateServerDate(date)
     {
         this._serverDate = date;
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_DATE_UPDATED, {date: this._serverDate});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_DATE_UPDATED, {date: this._serverDate});
     }
 
     /**

@@ -2,7 +2,7 @@ import BaseController from './BaseController';
 import Radio from 'backbone.radio';
 import Resource from 'lib/Models/Resource';
 import ResourceCollection from 'lib/Collections/ResourceCollection';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 
 /**
  * Controller for Resources.
@@ -18,12 +18,12 @@ export default class ControllerResource extends BaseController
     _initializeRadio()
     {
         // Requests
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__RESOURCE_CREATE, options => this._handleRequestResourceCreate(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__RESOURCE_DELETE, options => this._handleCommandResourceDelete(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__RESOURCE_DOWNLOAD, options => this._handleRequestResourceDownload(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__RESOURCE_SAVE, options => this._handleCommandResourceSave(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__RESOURCE_VIEWER_ACQUIRE, options => this._handleRequestViewer(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__RESOURCES_LOAD, options => this._handleRequestResources(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__RESOURCE_CREATE, options => this._handleRequestResourceCreate(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__RESOURCE_DELETE, options => this._handleCommandResourceDelete(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__RESOURCE_DOWNLOAD, options => this._handleRequestResourceDownload(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__RESOURCE_SAVE, options => this._handleCommandResourceSave(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__RESOURCE_VIEWER_ACQUIRE, options => this._handleRequestViewer(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__RESOURCES_LOAD, options => this._handleRequestResources(options));
     }
 
     /**
@@ -41,7 +41,7 @@ export default class ControllerResource extends BaseController
             resource = new Resource({project: options.project.get('url'), file: options.file});
         }
         var jqXHR = resource.save({}, {success: (model) => this._handleCreateSuccess(model, this._collection)});
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__TRANSFERMANAGER_MONITOR_UPLOAD, {request: jqXHR, file: options.file});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__TRANSFERMANAGER_MONITOR_UPLOAD, {request: jqXHR, file: options.file});
     }
 
     /**
@@ -60,7 +60,7 @@ export default class ControllerResource extends BaseController
         var mimetype = options.resource.get('resource_type_full').mimetype;
         var ext = options.resource.get('resource_type_full').extension;
         var filename = options.resource.get('name') + '.' + ext;
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__TRANSFERMANAGER_DOWNLOAD, {url: options.resource.get('download'), filename: filename, mimetype: mimetype});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__TRANSFERMANAGER_DOWNLOAD, {url: options.resource.get('download'), filename: filename, mimetype: mimetype});
     }
 
     /**
@@ -68,7 +68,7 @@ export default class ControllerResource extends BaseController
      */
     _handleCommandResourceSave(options)
     {
-        options.resource.save(options.fields, {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__RESOURCE_SAVED, {resource: model})});
+        options.resource.save(options.fields, {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__RESOURCE_SAVED, {resource: model})});
     }
 
     /**
@@ -109,7 +109,7 @@ export default class ControllerResource extends BaseController
     _handleCreateSuccess(resource, collection)
     {
         collection.add(resource);
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__RESOURCE_CREATED, {resource: resource});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__RESOURCE_CREATED, {resource: resource});
     }
 
     /**
@@ -118,7 +118,7 @@ export default class ControllerResource extends BaseController
     _handleDeleteSuccess(model, collection)
     {
         collection.remove(model);
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__RESOURCE_DELETED, {resource: model});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__RESOURCE_DELETED, {resource: model});
     }
 
     /**
@@ -126,6 +126,6 @@ export default class ControllerResource extends BaseController
      */
     _handleSuccessGeneric(options)
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__MODAL_HIDE);
+        Radio.channel('rodan-client-core').request(Events.REQUEST__MODAL_HIDE);
     }
 }

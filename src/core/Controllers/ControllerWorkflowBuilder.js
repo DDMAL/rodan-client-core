@@ -10,7 +10,7 @@ import Radio from 'backbone.radio';
 import Resource from 'lib/Models/Resource';
 import ResourceCollection from 'lib/Collections/ResourceCollection';
 import ResourceList from 'lib/Models/ResourceList';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 import WorkflowCollection from 'lib/Collections/WorkflowCollection';
 
 /**
@@ -39,28 +39,28 @@ export default class ControllerWorkflowBuilder extends BaseController
      */
     _initializeRadio()
     {
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__WORKFLOWBUILDER_SELECTED, options => this._handleEventBuilderSelected(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_SET_ADDPORTS, options => this._handleRequestSetAddPorts(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_ADD_CONNECTION, options => this._handleCommandAddConnection(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_ADD_INPUTPORT, options => this._handleCommandAddInputPort(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_ADD_OUTPUTPORT, options => this._handleCommandAddOutputPort(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_ADD_WORKFLOWJOB, options => this._handleRequestAddWorkflowJob(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_ADD_WORKFLOWJOBGROUP, options => this._handleRequestAddWorkflowJobGroup(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_ASSIGN_RESOURCE, options => this._handleRequestAssignResource(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_CREATE_WORKFLOWRUN, options => this._handleRequestCreateWorkflowRun(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_ADD_DISTRIBUTOR, options => this._handleRequestCreateDistributor(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_REMOVE_CONNECTION, options => this._handleRequestDeleteConnection(options), this); 
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_REMOVE_INPUTPORT, options => this._handleCommandDeleteInputPort(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_REMOVE_OUTPUTPORT, options => this._handleCommandDeleteOutputPort(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOB, options => this._handleRequestDeleteWorkflowJob(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOBGROUP, options => this._handleRequestDeleteWorkflowJobGroup(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_GET_RESOURCEASSIGNMENTS, options => this._handleRequestGetResourceAssignments(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_IMPORT_WORKFLOW, options => this._handleRequestImportWorkflow(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_LOAD_WORKFLOW, options => this._handleEventLoadWorkflow(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_UNASSIGN_RESOURCE, options => this._handleRequestUnassignResource(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_UNGROUP_WORKFLOWJOBGROUP, options => this._handleRequestWorkflowJobGroupUngroup(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, options => this._handleRequestValidateWorkflow(options), this);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_GET_SATISFYING_INPUTPORTS, options => this._handleRequestGetSatisfyingInputPorts(options), this);
+        Radio.channel('rodan-client-core').on(Events.EVENT__WORKFLOWBUILDER_SELECTED, options => this._handleEventBuilderSelected(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_SET_ADDPORTS, options => this._handleRequestSetAddPorts(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_ADD_CONNECTION, options => this._handleCommandAddConnection(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_ADD_INPUTPORT, options => this._handleCommandAddInputPort(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_ADD_OUTPUTPORT, options => this._handleCommandAddOutputPort(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_ADD_WORKFLOWJOB, options => this._handleRequestAddWorkflowJob(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_ADD_WORKFLOWJOBGROUP, options => this._handleRequestAddWorkflowJobGroup(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_ASSIGN_RESOURCE, options => this._handleRequestAssignResource(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_CREATE_WORKFLOWRUN, options => this._handleRequestCreateWorkflowRun(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_ADD_DISTRIBUTOR, options => this._handleRequestCreateDistributor(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_REMOVE_CONNECTION, options => this._handleRequestDeleteConnection(options), this); 
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_REMOVE_INPUTPORT, options => this._handleCommandDeleteInputPort(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_REMOVE_OUTPUTPORT, options => this._handleCommandDeleteOutputPort(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOB, options => this._handleRequestDeleteWorkflowJob(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOBGROUP, options => this._handleRequestDeleteWorkflowJobGroup(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_GET_RESOURCEASSIGNMENTS, options => this._handleRequestGetResourceAssignments(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_IMPORT_WORKFLOW, options => this._handleRequestImportWorkflow(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_LOAD_WORKFLOW, options => this._handleEventLoadWorkflow(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_UNASSIGN_RESOURCE, options => this._handleRequestUnassignResource(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_UNGROUP_WORKFLOWJOBGROUP, options => this._handleRequestWorkflowJobGroupUngroup(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, options => this._handleRequestValidateWorkflow(options), this);
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWBUILDER_GET_SATISFYING_INPUTPORTS, options => this._handleRequestGetSatisfyingInputPorts(options), this);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ export default class ControllerWorkflowBuilder extends BaseController
         this._resourceAssignments = [];
         this._resourcesAvailable = [];
         this._addPorts = true;
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_LOAD_WORKFLOW, {'workflow': options.workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_LOAD_WORKFLOW, {'workflow': options.workflow});
     }
 
     /**
@@ -91,7 +91,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _handleRequestCreateWorkflowRun(options)
     {
         this._workflowRunOptions = {workflow: options.workflow, assignments: {}};
-        var inputPortTypes = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_INPUTPORTTYPE_COLLECTION);
+        var inputPortTypes = Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_INPUTPORTTYPE_COLLECTION);
         var knownInputPorts = this._workflowRunOptions.workflow.get('workflow_input_ports').clone();
         for (var inputPortUrl in this._resourceAssignments)
         {
@@ -156,8 +156,8 @@ export default class ControllerWorkflowBuilder extends BaseController
     _handleWorkflowLoadSuccess(workflow)
     {
         this._processWorkflow(workflow);
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWBUILDER_LOADED_WORKFLOW, {workflow: workflow});
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWBUILDER_LOADED_WORKFLOW, {workflow: workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
     }
 
     /**
@@ -165,9 +165,9 @@ export default class ControllerWorkflowBuilder extends BaseController
      */
     _handleRequestAddWorkflowJob(options)
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWJOB_CREATE, {job: options.job, workflow: options.workflow, addports: this._addPorts});
-        Radio.channel('rodan-client-core').once(RODAN_EVENTS.EVENT__WORKFLOWJOB_CREATED, 
-                               () => Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: options.workflow}));
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWJOB_CREATE, {job: options.job, workflow: options.workflow, addports: this._addPorts});
+        Radio.channel('rodan-client-core').once(Events.EVENT__WORKFLOWJOB_CREATED, 
+                               () => Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: options.workflow}));
     }
 
     /**
@@ -175,9 +175,9 @@ export default class ControllerWorkflowBuilder extends BaseController
      */
     _handleRequestDeleteWorkflowJob(options)
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWJOB_DELETE, {workflowjob: options.workflowjob, workflow: options.workflow});
-        Radio.channel('rodan-client-core').once(RODAN_EVENTS.EVENT__WORKFLOWJOB_DELETED, 
-                               () => Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: options.workflow}));
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWJOB_DELETE, {workflowjob: options.workflowjob, workflow: options.workflow});
+        Radio.channel('rodan-client-core').once(Events.EVENT__WORKFLOWJOB_DELETED, 
+                               () => Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: options.workflow}));
     }
 
     /**
@@ -185,8 +185,8 @@ export default class ControllerWorkflowBuilder extends BaseController
      */
     _handleRequestDeleteWorkflowJobGroup(options)
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_DELETE, {workflowjobgroup: options.workflowjobgroup, workflow: options.workflow});
-        Radio.channel('rodan-client-core').once(RODAN_EVENTS.EVENT__WORKFLOWJOBGROUP_DELETED, () => this._handleEventWorkflowJobGroupDelete(options.workflowjobgroup, options.workflow));
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWJOBGROUP_DELETE, {workflowjobgroup: options.workflowjobgroup, workflow: options.workflow});
+        Radio.channel('rodan-client-core').once(Events.EVENT__WORKFLOWJOBGROUP_DELETED, () => this._handleEventWorkflowJobGroupDelete(options.workflowjobgroup, options.workflow));
     }
 
     /**
@@ -202,9 +202,9 @@ export default class ControllerWorkflowBuilder extends BaseController
      */
     _handleRequestImportWorkflow(options)
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_IMPORT, {origin: options.origin, target: options.target});
-        Radio.channel('rodan-client-core').once(RODAN_EVENTS.EVENT__WORKFLOWJOBGROUP_IMPORTED, 
-                               () => Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_LOAD_WORKFLOW, {workflow: options.target}));
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWJOBGROUP_IMPORT, {origin: options.origin, target: options.target});
+        Radio.channel('rodan-client-core').once(Events.EVENT__WORKFLOWJOBGROUP_IMPORTED, 
+                               () => Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_LOAD_WORKFLOW, {workflow: options.target}));
     }
 
     /**
@@ -283,7 +283,7 @@ export default class ControllerWorkflowBuilder extends BaseController
                     var inputPort = options.inputports[index];
                     targetInputPorts.push(options.workflow.get('workflow_input_ports').get(inputPort.id));
                 }
-                Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWJOB_CREATE, {job: jobs[0], 
+                Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWJOB_CREATE, {job: jobs[0], 
                                                                                workflow: options.workflow, 
                                                                                addports: true,
                                                                                targetinputports: targetInputPorts});
@@ -296,7 +296,7 @@ export default class ControllerWorkflowBuilder extends BaseController
      */
     _handleRequestWorkflowJobGroupUngroup(options)
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_DELETE, {workflowjobgroup: options.workflowjobgroup, workflow: options.workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWJOBGROUP_DELETE, {workflowjobgroup: options.workflowjobgroup, workflow: options.workflow});
     }
 
     /**
@@ -304,7 +304,7 @@ export default class ControllerWorkflowBuilder extends BaseController
      */
     _handleRequestAddWorkflowJobGroup(options)
     {
-//        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_CREATE, {workflowjobs: options.workflowjobs, workflow: options.workflow});
+//        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWJOBGROUP_CREATE, {workflowjobs: options.workflowjobs, workflow: options.workflow});
     }
 
     /**
@@ -349,7 +349,7 @@ export default class ControllerWorkflowBuilder extends BaseController
         for (var index in workflowJobs)
         {
             var workflowJob = workflow.get('workflow_jobs').findWhere({url: workflowJobs[index]});
-            Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOB, {workflowjob: workflowJob, workflow: workflow});
+            Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOB, {workflowjob: workflowJob, workflow: workflow});
         }
     }
 
@@ -390,7 +390,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     {
         workflow.get('workflow_input_ports').add(model);
         workflowJob.get('input_ports').add(model);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
     }
 
     /**
@@ -404,7 +404,7 @@ export default class ControllerWorkflowBuilder extends BaseController
         {
             this._createConnection(model, targetInputPorts[index], workflow);
         }
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
     }
 
     /**
@@ -415,7 +415,7 @@ export default class ControllerWorkflowBuilder extends BaseController
         workflow.get('connections').add(model);
         inputPort.fetch(); // to get populated Connection array
         outputPort.fetch(); // to get populated Connection array
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
     }
 
     /**
@@ -424,7 +424,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _handleInputPortDeletionSuccess(model, workflow, workflowJob)
     {
         workflowJob.get('input_ports').remove(model);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
     }
 
     /**
@@ -433,7 +433,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _handleOutputPortDeletionSuccess(model, workflow, workflowJob)
     {
         workflowJob.get('output_ports').remove(model);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
     }
 
     /**
@@ -442,7 +442,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _handleConnectionDeletionSuccess(model, workflow)
     {
         workflow.get('connections').remove(model);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWBUILDER_VALIDATE_WORKFLOW, {workflow: workflow});
     }
 
     /**
@@ -451,7 +451,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _handleValidationFailure(model, response, options)
     {
         model.set({'valid': false});
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWBUILDER_VALIDATED_WORKFLOW, {workflow: model});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWBUILDER_VALIDATED_WORKFLOW, {workflow: model});
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -517,7 +517,7 @@ export default class ControllerWorkflowBuilder extends BaseController
         }
 
         // Finally inport the WorkflowJobGroups. 
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_LOAD_COLLECTION, {workflow: workflow});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWJOBGROUP_LOAD_COLLECTION, {workflow: workflow});
     }
 
     /**
@@ -573,7 +573,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _validateWorkflow(workflow)
     {
         workflow.save({valid: true}, {patch: true,
-                                      success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWBUILDER_VALIDATED_WORKFLOW, {workflow: model}),
+                                      success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWBUILDER_VALIDATED_WORKFLOW, {workflow: model}),
                                       error: (model, response, options) => this._handleValidationFailure(model, response, options)});
     }
 
@@ -584,7 +584,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _getCompatibleResourceTypeURLs(inputPorts)
     {
         var resourceTypes = [];
-        var inputPortTypes = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_INPUTPORTTYPE_COLLECTION);
+        var inputPortTypes = Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_INPUTPORTTYPE_COLLECTION);
         for (var index in inputPorts)
         {
             // Get the available resource types.
@@ -609,7 +609,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _getOutputPortResourceTypeURLs(outputPort)
     {
         var resourceTypes = [];
-        var outputPortTypes = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_OUTPUTPORTTYPE_COLLECTION);
+        var outputPortTypes = Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_OUTPUTPORTTYPE_COLLECTION);
         var outputPortTypeURL = outputPort.get('output_port_type');
         var outputPortType = outputPortTypes.findWhere({url: outputPortTypeURL});
         var outputPortResourceTypes = outputPortType.get('resource_types');
@@ -623,7 +623,7 @@ export default class ControllerWorkflowBuilder extends BaseController
      */
     _getCandidateResourceDistributorJobs(resourceTypes)
     {
-        var jobs = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_JOB_COLLECTION).where({category: Configuration.RESOURCE_DISTRIBUTOR_CATEGORY});
+        var jobs = Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_JOB_COLLECTION).where({category: Configuration.RESOURCE_DISTRIBUTOR_CATEGORY});
         var satisfiableJobs = [];
         for (var i = 0; i < jobs.length; i++)
         {
@@ -686,10 +686,10 @@ export default class ControllerWorkflowBuilder extends BaseController
     {
         if (!this._resourcesAvailable[inputPort.get('url')])
         {
-            var project = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__PROJECT_GET_ACTIVE);
+            var project = Radio.channel('rodan-client-core').request(Events.REQUEST__PROJECT_GET_ACTIVE);
             var resourceTypeURLs = this._getCompatibleResourceTypeURLs([inputPort]);
             var data = {project: project.id, resource_type__in: ''};
-            var globalResourceTypes = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
+            var globalResourceTypes = Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
             var first = true;
             for (var index in resourceTypeURLs)
             {
@@ -736,7 +736,7 @@ export default class ControllerWorkflowBuilder extends BaseController
                 return false;
             }
         }
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__WORKFLOWRUN_CREATE, this._workflowRunOptions);
+        Radio.channel('rodan-client-core').request(Events.REQUEST__WORKFLOWRUN_CREATE, this._workflowRunOptions);
         return true;
     }
 
@@ -760,7 +760,7 @@ export default class ControllerWorkflowBuilder extends BaseController
     _getSatisfiableInputPorts(outputPort, workflow)
     {
         var outputPortResourceTypes = this._getOutputPortResourceTypeURLs(outputPort);
-        var inputPortTypes = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_INPUTPORTTYPE_COLLECTION);
+        var inputPortTypes = Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_INPUTPORTTYPE_COLLECTION);
         var inputPorts = [];
         var workflowJobs = workflow.get('workflow_jobs').models;
         for (var i = 0; i < workflowJobs.length; i++)

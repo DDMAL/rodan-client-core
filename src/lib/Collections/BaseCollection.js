@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Events';
 import Pagination from 'lib/Models/Pagination';
 import Radio from 'backbone.radio';
 
@@ -254,7 +254,7 @@ export default class BaseCollection extends Backbone.Collection
      */
     url()
     {
-        return Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_GET_ROUTE, this._route);
+        return Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_GET_ROUTE, this._route);
     }
 
     /**
@@ -301,7 +301,7 @@ export default class BaseCollection extends Backbone.Collection
      */
     _populateEnumerations(response)
     {
-        var options = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_GET_ROUTE_OPTIONS, {route: this.route});
+        var options = Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_GET_ROUTE_OPTIONS, {route: this.route});
         var items = response.results ? response.results : response;
         this._enumerations.forEach(function(enumeration, field)
         {
@@ -353,6 +353,6 @@ export default class BaseCollection extends Backbone.Collection
      */
     _onAdd(model, collection, options)
     {
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__COLLECTION_ADD, {model: model, collection: collection, options: options});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__COLLECTION_ADD, {model: model, collection: collection, options: options});
     }
 }

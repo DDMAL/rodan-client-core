@@ -26,7 +26,7 @@ import GlobalJobCollection from 'lib/Collections/Global/GlobalJobCollection';
 import GlobalOutputPortTypeCollection from 'lib/Collections/Global/GlobalOutputPortTypeCollection';
 import GlobalProjectCollection from 'lib/Collections/Global/GlobalProjectCollection';
 import GlobalResourceTypeCollection from 'lib/Collections/Global/GlobalResourceTypeCollection';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 
 let _instance = null;
 let _postInitFunction = null;
@@ -95,7 +95,7 @@ export default class Core
         }
 
         // We're ready to go! Connect to the server.
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_LOAD_ROUTES);
+        Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_LOAD_ROUTES);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -106,8 +106,8 @@ export default class Core
      */
     _initializeRadio()
     {
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__SERVER_ROUTESLOADED, () => this._handleEventRoutesLoaded());
-        Radio.channel('rodan-client-core').on(RODAN_EVENTS.EVENT__AUTHENTICATION_LOGIN_SUCCESS, () => this._handleAuthenticationSuccess());
+        Radio.channel('rodan-client-core').on(Events.EVENT__SERVER_ROUTESLOADED, () => this._handleEventRoutesLoaded());
+        Radio.channel('rodan-client-core').on(Events.EVENT__AUTHENTICATION_LOGIN_SUCCESS, () => this._handleAuthenticationSuccess());
     }
 
     /**
@@ -175,7 +175,7 @@ export default class Core
         // Do version compatibility trimming.
         if (Configuration.ENFORCE_VERSION_COMPATIBILITY)
         {
-            RODAN_EVENTS.enforceVersionCompatibility();
+            Events.enforceVersionCompatibility();
         }
     }
 
@@ -184,12 +184,12 @@ export default class Core
      */
     _handleAuthenticationSuccess()
     {
-        var user = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__AUTHENTICATION_USER);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_LOAD_ROUTE_OPTIONS);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_PROJECTS_LOAD, {data: {user: user.get('uuid')}});
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_INPUTPORTTYPES_LOAD);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_OUTPUTPORTTYPES_LOAD);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_RESOURCETYPES_LOAD);
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__GLOBAL_JOBS_LOAD, {data: {enabled: 'True'}});
+        var user = Radio.channel('rodan-client-core').request(Events.REQUEST__AUTHENTICATION_USER);
+        Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_LOAD_ROUTE_OPTIONS);
+        Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_PROJECTS_LOAD, {data: {user: user.get('uuid')}});
+        Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_INPUTPORTTYPES_LOAD);
+        Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_OUTPUTPORTTYPES_LOAD);
+        Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_RESOURCETYPES_LOAD);
+        Radio.channel('rodan-client-core').request(Events.REQUEST__GLOBAL_JOBS_LOAD, {data: {enabled: 'True'}});
     }
 }

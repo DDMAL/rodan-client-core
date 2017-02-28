@@ -1,5 +1,5 @@
 import Backbone from 'backbone';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Events';
 import Radio from 'backbone.radio';
 
 /**
@@ -31,7 +31,7 @@ export default class BaseModel extends Backbone.Model
      */
     url()
     {
-        var original_url = Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SERVER_GET_ROUTE, this.routeName);
+        var original_url = Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_GET_ROUTE, this.routeName);
         if (typeof this.get('uuid') !== 'undefined')
         {
             original_url = this.get('url');
@@ -110,8 +110,8 @@ export default class BaseModel extends Backbone.Model
      */
     _onChange(model, response, options)
     {
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__MODEL_CHANGE, {model: model, options: options});
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__MODEL_CHANGE + model.get('url'), {model: model, options: options});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__MODEL_CHANGE, {model: model, options: options});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__MODEL_CHANGE + model.get('url'), {model: model, options: options});
     }
 
     /**
@@ -119,8 +119,8 @@ export default class BaseModel extends Backbone.Model
      */
     _onSync(model, response, options)
     {
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__MODEL_SYNC, {model: model, response: response, options: options});
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__MODEL_SYNC + model.get('url'), {model: model, response: response, options: options});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__MODEL_SYNC, {model: model, response: response, options: options});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__MODEL_SYNC + model.get('url'), {model: model, response: response, options: options});
     }
 
     /**
@@ -181,7 +181,7 @@ export default class BaseModel extends Backbone.Model
      */
     _handleErrorResponse(model, response, options)
     {
-        Radio.channel('rodan-client-core').request(RODAN_EVENTS.REQUEST__SYSTEM_HANDLE_ERROR, {model: model,
+        Radio.channel('rodan-client-core').request(Events.REQUEST__SYSTEM_HANDLE_ERROR, {model: model,
                                                                   response: response,
                                                                   options: options});
     }

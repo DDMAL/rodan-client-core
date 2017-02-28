@@ -12,7 +12,6 @@ import Radio from 'backbone.radio';
 //  explain the "Global" collections
 //  difference between events and requests
 //  fields: {object with attributes to change}
-// how configuration.js is used for some events
 //  why we use "Collection" and not "List"
 //  mark some of these as "hidden" or try to remove them 
 
@@ -21,7 +20,7 @@ let _instance = null;
 /**
  * Backbone.Radio events use in the client. Do not instantiate this class.
  */
-class RODAN_EVENTS
+class Events
 {
     /** @ignore */
     constructor()
@@ -427,4 +426,4 @@ class RODAN_EVENTS
     }
 }
 /** @ignore */
-export default new RODAN_EVENTS();
+export default new Events();

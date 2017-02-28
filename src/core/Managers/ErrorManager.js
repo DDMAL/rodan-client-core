@@ -1,6 +1,6 @@
 import Backbone from 'backbone';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 
 /**
  * General error manager.
@@ -16,7 +16,7 @@ export default class ErrorHandler
     constructor()
     {
         window.onerror = (errorText, url, lineNumber, columnNumber, error) => this._handleJavaScriptError(errorText, url, lineNumber, columnNumber, error);
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__SYSTEM_HANDLE_ERROR, (options) => this._handleError(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__SYSTEM_HANDLE_ERROR, (options) => this._handleError(options));
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ export default class ErrorHandler
                 var error = options.response.responseJSON
                 var text = error.error_code + '<br>';
                 text += error.details[0];
-                Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__SERVER_ERROR, {json: error});
+                Radio.channel('rodan-client-core').trigger(Events.EVENT__SERVER_ERROR, {json: error});
             }
             else
             {

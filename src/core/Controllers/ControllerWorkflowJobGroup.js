@@ -1,6 +1,6 @@
 import BaseController from './BaseController';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Shared/Events';
 import WorkflowJobGroup from 'lib/Models/WorkflowJobGroup';
 import WorkflowJobGroupCollection from 'lib/Collections/WorkflowJobGroupCollection';
 
@@ -18,12 +18,12 @@ export default class ControllerWorkflowJobGroup extends BaseController
     initialize()
     {
         this._collection = new WorkflowJobGroupCollection();
-//        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_CREATE, (options) => this._handleRequestCreateWorkflowJobGroup(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_DELETE, (options) => this._handleRequestDeleteWorkflowJobGroup(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_GET_PORTS, (options) => this._handleRequestGetPorts(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_IMPORT, (options) => this._handleRequestImportWorkflowJobGroup(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_LOAD_COLLECTION, (options) => this._handleRequestWorkflowJobGroupLoadCollection(options));
-        Radio.channel('rodan-client-core').reply(RODAN_EVENTS.REQUEST__WORKFLOWJOBGROUP_SAVE, (options) => this._handleRequestSaveWorkflowJobGroup(options));
+//        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWJOBGROUP_CREATE, (options) => this._handleRequestCreateWorkflowJobGroup(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWJOBGROUP_DELETE, (options) => this._handleRequestDeleteWorkflowJobGroup(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWJOBGROUP_GET_PORTS, (options) => this._handleRequestGetPorts(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWJOBGROUP_IMPORT, (options) => this._handleRequestImportWorkflowJobGroup(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWJOBGROUP_LOAD_COLLECTION, (options) => this._handleRequestWorkflowJobGroupLoadCollection(options));
+        Radio.channel('rodan-client-core').reply(Events.REQUEST__WORKFLOWJOBGROUP_SAVE, (options) => this._handleRequestSaveWorkflowJobGroup(options));
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -60,7 +60,7 @@ export default class ControllerWorkflowJobGroup extends BaseController
      */
     _handleRequestSaveWorkflowJobGroup(options)
     {
-        options.workflowjobgroup.save(options.workflowjobgroup.changed, {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWJOBGROUP_SAVED, {workflowjobgroup: model})});
+        options.workflowjobgroup.save(options.workflowjobgroup.changed, {patch: true, success: (model) => Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWJOBGROUP_SAVED, {workflowjobgroup: model})});
     }
 
     /**
@@ -108,7 +108,7 @@ export default class ControllerWorkflowJobGroup extends BaseController
     _handleWorkflowJobGroupCreationSuccess(model)
     {
         this._collection.set(model, {remove: false});
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWJOBGROUP_IMPORTED, {workflowjobgroup: model});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWJOBGROUP_IMPORTED, {workflowjobgroup: model});
     }
 
     /**
@@ -117,7 +117,7 @@ export default class ControllerWorkflowJobGroup extends BaseController
     _handleWorkflowJobGroupDeleteSuccess(workflowJobGroup)
     {
         this._collection.remove(workflowJobGroup);
-        Radio.channel('rodan-client-core').trigger(RODAN_EVENTS.EVENT__WORKFLOWJOBGROUP_DELETED, {workflowjobgroup: workflowJobGroup});
+        Radio.channel('rodan-client-core').trigger(Events.EVENT__WORKFLOWJOBGROUP_DELETED, {workflowjobgroup: workflowJobGroup});
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////

@@ -1,8 +1,8 @@
 import Core from 'core/Core';
 import Configuration from 'core/Configuration';
-import Environment from 'lib/Shared/Environment';
+import Events from 'lib/Events';
+import Environment from 'lib/Environment';
 import Radio from 'backbone.radio';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
 
 // Collections.
 import BaseCollection from 'lib/Collections/BaseCollection';
@@ -52,7 +52,7 @@ const defaultExport =
 	config: Configuration, 
 	env: Environment, 
 	initialize: initialize,
-	events: RODAN_EVENTS,
+	events: Events,
 	setInitFunction: setInitFunction,
 
 	// Collections.

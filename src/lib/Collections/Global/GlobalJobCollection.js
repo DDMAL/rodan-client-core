@@ -1,5 +1,5 @@
 import GlobalCollection from './GlobalCollection';
-import RODAN_EVENTS from 'lib/Shared/RODAN_EVENTS';
+import Events from 'lib/Events';
 import Job from 'lib/Models/Job';
 
 let _instance = null;
@@ -28,8 +28,8 @@ export default class GlobalJobCollection extends GlobalCollection
         /** @ignore */
         this.model = Job;
         this._route = 'jobs';
-        this._loadCommand = RODAN_EVENTS.REQUEST__GLOBAL_JOBS_LOAD;
-        this._requestCommand = RODAN_EVENTS.REQUEST__GLOBAL_JOB_COLLECTION;
+        this._loadCommand = Events.REQUEST__GLOBAL_JOBS_LOAD;
+        this._requestCommand = Events.REQUEST__GLOBAL_JOB_COLLECTION;
         this._enumerations = new Map();
         this._enumerations.set('category', {label: 'Category'});
         this._enumerations.set('interactive', {label: 'Interactive', values: [{value: 'True', label: 'True'}, {value: 'False', label: 'False'}]});
