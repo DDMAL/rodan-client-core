@@ -26,7 +26,7 @@ import GlobalJobCollection from 'lib/Collections/Global/GlobalJobCollection';
 import GlobalOutputPortTypeCollection from 'lib/Collections/Global/GlobalOutputPortTypeCollection';
 import GlobalProjectCollection from 'lib/Collections/Global/GlobalProjectCollection';
 import GlobalResourceTypeCollection from 'lib/Collections/Global/GlobalResourceTypeCollection';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 
 let _instance = null;
 let _postInitFunction = null;

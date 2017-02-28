@@ -2,7 +2,7 @@ import BaseController from './BaseController';
 import Radio from 'backbone.radio';
 import Resource from 'lib/Models/Resource';
 import ResourceCollection from 'lib/Collections/ResourceCollection';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 
 /**
  * Controller for Resources.

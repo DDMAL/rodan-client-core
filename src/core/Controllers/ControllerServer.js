@@ -3,7 +3,7 @@ import Backbone from 'backbone';
 import BaseController from './BaseController';
 import Configuration from 'core/Configuration';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 
 var oldsync = Backbone.sync;
 Backbone.sync = function(method, model, options) { 'use strict'; return oldsync(method, model, options); };

@@ -1,6 +1,6 @@
 import Backbone from 'backbone';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 
 /**
  * File transfer manager. This manages all file (i.e. Resource) uploads and downloads.

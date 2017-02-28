@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
 import Configuration from 'core/Configuration';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 import RunJobCollection from 'lib/Collections/RunJobCollection';
 
 /**

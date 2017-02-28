@@ -1,7 +1,7 @@
 import Configuration from 'core/Configuration';
 import PollUpdater from 'core/Updater/PollUpdater';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 import SocketUpdater from 'core/Updater/SocketUpdater';
 
 /**

@@ -3,7 +3,7 @@ import BaseController from 'core/Controllers/BaseController';
 import Configuration from 'core/Configuration';
 import FileSaver from 'file-saver';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 
 /**
  * Download controller.

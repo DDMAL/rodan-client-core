@@ -1,6 +1,6 @@
 import Backbone from 'backbone';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 
 /**
  * General error manager.

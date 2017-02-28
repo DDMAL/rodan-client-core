@@ -1,7 +1,6 @@
 import BaseController from './BaseController';
 import Configuration from 'core/Configuration';
-import Cookie from 'lib/Shared/Cookie';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 import Radio from 'backbone.radio';
 import User from 'lib/Models/User';
 
@@ -15,24 +14,11 @@ export default class ControllerAuthentication extends BaseController
 ///////////////////////////////////////////////////////////////////////////////////////
     /**
      * Initializes the instance.
-     *
-     * How authentication behaves depends on Configuration.SERVER_AUTHENTICATION_TYPE.
      */
     initialize()
     {
+        this._token = null;
         this._user = null;
-        if (Configuration.SERVER_AUTHENTICATION_TYPE === 'session')
-        {
-            this._token = new Cookie('csrftoken');
-        }
-        else if (Configuration.SERVER_AUTHENTICATION_TYPE === 'token')
-        {
-            this._token = new Cookie('token');
-        }
-        else
-        {
-            /** @todo throw error if bad authentication type. */
-        }
     }
 
     /**
@@ -46,29 +32,14 @@ export default class ControllerAuthentication extends BaseController
     {
         var that = this;
         var oldOnBeforeSend = options.beforeSend;
-        if (Configuration.SERVER_AUTHENTICATION_TYPE === 'session' && !options.beforeSend) 
+        options.beforeSend = function (xhr)
         {
-            options.xhrFields = { withCredentials: true };
-            options.beforeSend = function (xhr) 
+            if (oldOnBeforeSend)
             {
-                if (oldOnBeforeSend)
-                {
-                    oldOnBeforeSend(xhr);
-                }
-                xhr.setRequestHeader('X-CSRFToken', that._token.value);
-            };
-        }
-        else if(Configuration.SERVER_AUTHENTICATION_TYPE === 'token')
-        {
-            options.beforeSend = function (xhr)
-            {
-                if (oldOnBeforeSend)
-                {
-                    oldOnBeforeSend(xhr);
-                }
-                xhr.setRequestHeader('Authorization', 'Token ' + that._token.value);
-            };
-        }
+                oldOnBeforeSend(xhr);
+            }
+            xhr.setRequestHeader('Authorization', 'Token ' + that._token);
+        };
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -172,7 +143,7 @@ export default class ControllerAuthentication extends BaseController
     {
         // First, check if we have the appropriate authentication data. If we do, check it.
         // If we don't, trigger an event to inform of login require.
-        if (!this._token || this._token.value === '')
+        if (!this._token || this._token === '')
         {
             Radio.channel('rodan-client-core').trigger(Events.EVENT__AUTHENTICATION_LOGINREQUIRED);
         }
@@ -195,15 +166,10 @@ export default class ControllerAuthentication extends BaseController
     _login(options)
     {
         var authRoute = this._getAuthenticationRoute();
-        var authType = Configuration.SERVER_AUTHENTICATION_TYPE;
         var request = new XMLHttpRequest();
         request.onload = (event) => this._handleAuthenticationResponse(event);
         request.ontimeout = (event) => this._handleTimeout(event);
         request.open('POST', authRoute, true);
-        if (authType === 'session')
-        {
-            request.withCredentials = true;
-        }
         request.setRequestHeader('Accept', 'application/json');
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.send('username=' + options.username + '&password=' + options.password);
@@ -221,7 +187,6 @@ export default class ControllerAuthentication extends BaseController
         request.open('POST', authRoute, true);
         request.setRequestHeader('Accept', 'application/json');
         this._setAuthenticationData(request);
-        this._deleteAuthenticationData();
         request.send();
         this._user = null;
     }
@@ -231,28 +196,7 @@ export default class ControllerAuthentication extends BaseController
      */
     _setAuthenticationData(request)
     {
-        if (Configuration.SERVER_AUTHENTICATION_TYPE === 'token')
-        {
-            request.setRequestHeader('Authorization', 'Token ' + this._token.value);
-        }
-        else if (Configuration.SERVER_AUTHENTICATION_TYPE === 'session')
-        {
-            request.withCredentials = true;
-            request.setRequestHeader('X-CSRFToken', this._token.value);
-        }   
-    }
-
-    /**
-     * Deletes authentication data.
-     */
-    _deleteAuthenticationData()
-    {
-        // Only need to worry about token authentication.
-        if (Configuration.SERVER_AUTHENTICATION_TYPE === 'token')
-        {
-            Cookie.saveCookie('token', '', 0);
-            this._token = new Cookie('token');
-        }
+        request.setRequestHeader('Authorization', 'Token ' + this._token); 
     }
 
     /** 
@@ -260,14 +204,9 @@ export default class ControllerAuthentication extends BaseController
      */
     _processAuthenticationData()
     {
-        if (Configuration.SERVER_AUTHENTICATION_TYPE === 'token' && this._user.has('token'))
+        if (this._user.has('token'))
         {
-            Cookie.saveCookie('token', this._user.get('token'), 365);
-            this._token = new Cookie('token');
-        }
-        else if (Configuration.SERVER_AUTHENTICATION_TYPE === 'session')
-        {
-            this._token = new Cookie('csrftoken');
+            this._token = this._user.get('token');
         }
     }
 
@@ -284,24 +223,7 @@ export default class ControllerAuthentication extends BaseController
      */
     _getAuthenticationRoute()
     {
-        switch (Configuration.SERVER_AUTHENTICATION_TYPE)
-        {
-            case 'session':
-            {
-                return Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_GET_ROUTE, 'session-auth');
-            }
-
-            case 'token':
-            {
-                return Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_GET_ROUTE, 'auth-token');
-            }
-
-            default:
-            {
-                console.error('An acceptable Authentication Type was not provided');
-                break;
-            }
-        }
+        return Radio.channel('rodan-client-core').request(Events.REQUEST__SERVER_GET_ROUTE, 'auth-token');
     }
 
     /**

@@ -1,7 +1,7 @@
 import AbstractUpdater from './AbstractUpdater';
 import Configuration from 'core/Configuration';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 
 /**
  * Updater that uses sockets to trigger collection updates.

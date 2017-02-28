@@ -1,6 +1,6 @@
 import BaseController from 'core/Controllers/BaseController';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 import WorkflowJob from 'lib/Models/WorkflowJob';
 
 /**

@@ -1,7 +1,7 @@
 import BaseController from './BaseController';
 import Project from 'lib/Models/Project';
 import Radio from 'backbone.radio';
-import Events from 'lib/Shared/Events';
+import Events from 'lib/Events';
 import UserCollection from 'lib/Collections/UserCollection';
 import WorkflowRunCollection from 'lib/Collections/WorkflowRunCollection';
 
