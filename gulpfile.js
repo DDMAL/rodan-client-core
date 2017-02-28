@@ -28,10 +28,10 @@ const CONFIGURATION_FILE = 'configuration.json';
 const CONFIGURATION_EXAMPLE_FILE = 'configuration.example.json';
 const ENTRY_FILE = './src/index.js';
 const INFO_FILE = 'info.json';
-const LIBRARY_NAME = 'rodan_client_core';
+const LIBRARY_NAME = 'rodan-client-core';
 const LIBRARY_TARGET = 'commonjs';
 const NODE_MODULES_DIRECTORY = 'node_modules';
-const OUTPUT_FILE = 'rodan_client_core.js';
+const OUTPUT_FILE = 'rodan-client-core.js';
 const PACKAGE_FILE = 'package.json';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ var webpackConfig =
     module: 
     {
         rules: [{
-            exclude: /(node_modules|bower_components)/,
+            exclude: /(node_modules)/,
             test: /\.(js)$/,
             use: [{loader: 'babel-loader', options: {presets: ['es2015']}}]
         }]
