@@ -130,8 +130,8 @@ gulp.task('test:link', function()
 {
     return gulp.src([NODE_MODULES_DIRECTORY + '/mocha',
                      NODE_MODULES_DIRECTORY + '/chai'])
-               .pipe(symlink([TEST_DIRECTORY + '/mocha',
-                              TEST_DIRECTORY + '/chai'], {force: true}));
+               .pipe(symlink([TEST_DIRECTORY + '/libs/mocha',
+                              TEST_DIRECTORY + '/libs/chai'], {force: true}));
 });
 
 /**

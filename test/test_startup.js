@@ -1,11 +1,3 @@
-var rodan = rodan_client_core.default;
-var assert = chai.assert;
-
-// Setup config.
-rodan.config.DEBUG = true;
-rodan.config.SERVER_HOST = 'api.dev.rodan.simssa.ca';
-const TIMER_WAIT = 3000;
-
 // Startup/init test.
 describe('#initialize(), #setInitFunction()', function() 
 {
