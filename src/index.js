@@ -48,7 +48,7 @@ const defaultExport =
 	channel: Radio.channel('rodan-client-core'),
 	config: Configuration, 
 	env: Environment, 
-        events: Events,
+    events: Events,
 	initialize: Core.initialize,
 	setInitFunction: Core.setPostInitializeFunction,
 
