@@ -34,6 +34,7 @@ export default class ControllerUserPreference extends BaseController
         /** @ignore */
         this._collection = new UserPreferenceCollection();
         Radio.channel('rodan-client-core').on(Events.EVENT__AUTHENTICATION_LOGIN_SUCCESS, (options) => this._handleEventAuthenticationSuccess(options));
+        Radio.channel('rodan-client-core').on(Events.EVENT__AUTHENTICATION_LOGOUT_SUCCESS, (options) => this._handleEventLogoutSuccess(options));
         Radio.channel('rodan-client-core').reply(Events.REQUEST__USER_PREFERENCE, (options) => this._handleRequestUserPreference(options));
         Radio.channel('rodan-client-core').reply(Events.REQUEST__USER_PREFERENCE_SAVE, (options) => this._handleRequestUserPreferenceSave(options));
     }
@@ -44,6 +45,15 @@ export default class ControllerUserPreference extends BaseController
     _handleEventAuthenticationSuccess(options)
     {
         this._collection.fetch({data: {user: options.user.id}, success: () => this._handleAjaxLoadUserPreference(options.user)});
+    }
+
+    /**
+     * Handle logout success.
+     */
+    _handleEventLogoutSuccess(options)
+    {
+        this._userPreference = null;
+        this._collection = null;
     }
 
     /**
