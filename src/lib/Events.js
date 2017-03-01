@@ -1,20 +1,5 @@
 import Radio from 'backbone.radio';
 
-// todo
-// CONTROLLERS: workflowjob messages the builder and it shouldn't
-
-// TODO - in final docs, explain
-// 
-//  make model saves like workflowjob controller; only specify the "changed" fields
-//  server errors (json)
-//  explain options for route
-//  data: {query parameters}
-//  explain the "Global" collections
-//  difference between events and requests
-//  fields: {object with attributes to change}
-//  why we use "Collection" and not "List"
-//  mark some of these as "hidden" or try to remove them 
-
 let _instance = null;
 
 /**
@@ -30,14 +15,7 @@ class Events
             throw new Error('this class cannot be instantiated more than once');
         }
         _instance = this;
-
-        /** @ignore */
-        this.EVENT__SERVER_WENTAWAY = 'EVENT__SERVER_WENTAWAY';                      // Called on server disconnect. No pass.
-        /** @ignore */
-        this.EVENT__SERVER_PANIC = 'EVENT__SERVER_PANIC';                            // Called when the app suspects that something went wrong.
-        /** @ignore */
-        this.REQUEST__SYSTEM_HANDLE_ERROR = 'REQUEST__SYSTEM_HANDLE_ERROR';          // Sends error to error handler. Takes {model: BaseModel, response: HTTP response, option: associated options}.
-
+ 
         ///////////////////////////////////////////////////////////////////////////////////////
         // Authentication
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -189,14 +167,18 @@ class Events
         this.EVENT__SERVER_DATE_UPDATED = 'EVENT__SERVER_DATE_UPDATED';
         /** Triggered on Rodan-based server errors. Sends {json: JSON object of error}. */
         this.EVENT__SERVER_ERROR = 'EVENT__SERVER_ERROR';
-        /** Triggered when the client has no pending HTTP requests waiting to complete. Only fires if EVENT__SERVER_WAITING had previously been fired. */
+        /** Triggered when the client has no pending HTTP requests waiting to complete. Only fires if EVENT__SERVER_WAITING (see Configuration) had previously been fired. */
         this.EVENT__SERVER_IDLE = 'EVENT__SERVER_IDLE';
+        /** Triggered when a request to the server has not returned within SERVER_PANIC_TIMER (see Configuration). */
+        this.EVENT__SERVER_PANIC = 'EVENT__SERVER_PANIC';
         /** Triggered when there is an update to pending AJAX requests. Sends {pending: int >= 0}.  */
         this.EVENT__SERVER_REQUESTS_PENDING_UPDATE = 'EVENT__SERVER_REQUESTS_PENDING_UPDATE';
         /** Triggered when server routes have been loaded. */
         this.EVENT__SERVER_ROUTESLOADED = 'EVENT__SERVER_ROUTESLOADED';
         /** Triggered when client has been waiting a predefined amount of time for 'complete' state (i.e. not waiting on server response). Sends {pending: int (number of pending AJAX responses)}*/
         this.EVENT__SERVER_WAITING = 'EVENT__SERVER_WAITING';
+        /** Triggered when a request to the server times-out. This check is currently only done during authentication processes. */
+        this.EVENT__SERVER_WENTAWAY = 'EVENT__SERVER_WENTAWAY';
         /** Request server configuration. Returns object. */
         this.REQUEST__SERVER_CONFIGURATION = 'REQUEST__SERVER_CONFIGURATION';
         /** Request last known server date and time. Returns Date. */
@@ -209,6 +191,8 @@ class Events
         this.REQUEST__SERVER_GET_ROUTE_OPTIONS = 'REQUEST__SERVER_GET_ROUTE_OPTIONS';
         /** Request version of server. Returns string. */
         this.REQUEST__SERVER_GET_VERSION = 'REQUEST__SERVER_GET_VERSION';
+        /** Request that a server error be handled (output). Takes {response: HTTP response object}. */
+        this.REQUEST__SYSTEM_HANDLE_ERROR = 'REQUEST__SYSTEM_HANDLE_ERROR';
         /** Request the client to load all routes. EVENT__SERVER_ROUTESLOADED is triggered on success. */
         this.REQUEST__SERVER_LOAD_ROUTES = 'REQUEST__SERVER_LOAD_ROUTES';
         /** Request the client to load all options for routes. Must authenticate prior to making this request. */
