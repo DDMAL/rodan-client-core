@@ -43,17 +43,14 @@ import WorkflowJob from 'lib/Models/WorkflowJob';
 import WorkflowJobGroup from 'lib/Models/WorkflowJobGroup';
 import WorkflowRun from 'lib/Models/WorkflowRun';
 
-const initialize = function() { Core.initialize(); };
-const channel = Radio.channel('rodan-client-core');
-const setInitFunction = function(func) { Core.setPostInitializeFunction(func); };
 const defaultExport = 
 {
-	channel: channel,
+	channel: Radio.channel('rodan-client-core'),
 	config: Configuration, 
 	env: Environment, 
-	initialize: initialize,
-	events: Events,
-	setInitFunction: setInitFunction,
+        events: Events,
+	initialize: Core.initialize,
+	setInitFunction: Core.setPostInitializeFunction,
 
 	// Collections.
 	BaseCollection: BaseCollection,
