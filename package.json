@@ -16,7 +16,6 @@
     "clean": "gulp clean",
     "start": "gulp test",
     "test": "gulp test",
-    "pretest": "node scripts/pretest.js",
     "postversion": "git push && git push --tags",
     "preversion": "node scripts/preversion.js"
   },

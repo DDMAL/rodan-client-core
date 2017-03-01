@@ -145,12 +145,15 @@ gulp.task('test', ['test:link', 'test:info'], function(callback)
     var server = new WebpackDevServer(compiler, { contentBase: TEST_DIRECTORY });
     server.listen(TEST_PORT, TEST_HOST, function(err)
     {
+        var domainPort = TEST_HOST + ':' + TEST_PORT;
+        var url = 'http://' + domainPort;
         console.log('');
         console.log('================================================================================');
-        console.log('Starting server on: http://' + TEST_HOST + ':' + TEST_PORT);
+        console.log('Starting server on ' + domainPort);
         console.log('Serving: ' + TEST_DIRECTORY);
         console.log('');
-        console.log('Make sure ' + TEST_HOST + ':' + TEST_PORT + ' is allowed access to the Rodan server');
+        console.log('Open your browser to ' + url + '.');
+        console.log('(Make sure ' + domainPort + ' is allowed access to the Rodan server.)');
         console.log('================================================================================');
         console.log('');
     });
