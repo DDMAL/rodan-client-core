@@ -1,5 +1,5 @@
 // Did we import?
-var rodan = rodan_client_core;
+var rodan = rodan_client_core.default;
 console.log(rodan);
 
 // Load a config file.

@@ -28,6 +28,7 @@ const BUILD_ROOT = 'dist';
 const ENTRY_FILE = './src/index.js';
 const INFO_FILE = 'info.json';
 const LIBRARY_NAME = 'rodan-client-core';
+const LIBRARY_NAME_VAR = 'rodan_client_core';
 const LIBRARY_TARGET = 'umd';
 const NODE_MODULES_DIRECTORY = 'node_modules';
 const OUTPUT_FILE = 'rodan-client-core.js';
@@ -42,7 +43,6 @@ var webpackConfig =
     output: 
     {
         filename: OUTPUT_FILE,
-        library: LIBRARY_NAME,
         path: path.resolve(__dirname, BUILD_ROOT)
     },
     module: 
@@ -87,6 +87,7 @@ gulp.task('build:mkdir', ['build:clean'], function(callback)
  */
 gulp.task('build', ['build:mkdir'], function(callback)
 {
+    webpackConfig.output.library = LIBRARY_NAME;
     webpackConfig.output.libraryTarget = LIBRARY_TARGET;
     webpack(webpackConfig, function(error, data)
     {
@@ -155,6 +156,7 @@ gulp.task('test:link', ['test:mkdir'], function()
  */
 gulp.task('test', ['test:mkdir', 'test:link', 'test:info'], function(callback)
 {
+    webpackConfig.output.library = LIBRARY_NAME_VAR;
     var compiler = webpack(webpackConfig);
     var server = new WebpackDevServer(compiler, { contentBase: TEST_WEBROOT });
     server.listen(TEST_PORT, TEST_HOST, function(err)
