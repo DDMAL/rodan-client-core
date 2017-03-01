@@ -1,5 +1,5 @@
-// AUTHENTICATION
-describe('AUTHENTICATION', function()
+// Authentication
+describe('Authentication', function()
 {
     // Authentication check.
     describe(rodan.events.REQUEST__AUTHENTICATION_CHECK, function() 
@@ -93,6 +93,7 @@ describe('AUTHENTICATION', function()
         it('get User', function(done)
         {
             var user = rodan.channel.request(rodan.events.REQUEST__AUTHENTICATION_USER);
+            assert.instanceOf(user, rodan.User);
             assert.deepEqual(user, testUser);
             done(); 
         });

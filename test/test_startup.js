@@ -1,5 +1,5 @@
 // Startup/init test.
-describe('#initialize(), #setInitFunction()', function() 
+describe('Startup (#initialize(), #setInitFunction())', function() 
 {
     it('proper initialization', function(done)
     {
