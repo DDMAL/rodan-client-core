@@ -24,9 +24,6 @@ var Configuration = {
     // Set to true iff you want to see socket message data in the console. Default is false.
     SERVER_SOCKET_DEBUG: false,
 
-    // Authentication type. Either 'session' or 'token'. Default is 'token'.
-    SERVER_AUTHENTICATION_TYPE: 'token',
-
     // This determines the method to use for loading updates from the server.
     // Either 'POLL' (default) or 'SOCKET'.
     SERVER_UPDATE_METHOD: 'POLL',
