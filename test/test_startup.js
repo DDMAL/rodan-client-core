@@ -1,0 +1,46 @@
+var rodan = rodan_client_core.default;
+var assert = chai.assert;
+
+// Setup config.
+rodan.config.DEBUG = true;
+rodan.config.SERVER_HOST = 'api.dev.rodan.simssa.ca';
+const TIMER_WAIT = 3000;
+
+// Startup/init test.
+describe('#initialize(), #setInitFunction()', function() 
+{
+    it('proper initialization', function(done)
+    {
+        var triggered = false;
+        var postInitCalled = false;
+
+        // This is the post-init function.
+        var postInit = function()
+        {
+            assert.isFalse(triggered, 'routes loaded before function sent to setInitFunction() was called'); 
+            postInitCalled = true;
+        };
+
+        // Catch Radio event.
+        rodan.channel.on(rodan.events.EVENT__SERVER_ROUTESLOADED, function(options)
+        { 
+            assert.isTrue(postInitCalled, 'setInitFunction() has not yet been called'); 
+            done(); 
+        });
+
+        // Set timeout.
+        setTimeout(function() 
+        {
+            if (!triggered && !postInitCalled)
+            {
+                assert.isTrue(triggered);
+                assert.isTrue(postInitCalled);
+                done(); 
+            }
+        }, TIMER_WAIT);
+
+        // Initialize.
+        rodan.setInitFunction(postInit);
+    	rodan.initialize();
+    });
+});

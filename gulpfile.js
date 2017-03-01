@@ -17,7 +17,6 @@ const WebpackDevServer = require("webpack-dev-server");
 ////////////////////////////////////////////////////////////////////////////////
 const TEST_HOST = ip.address();
 const TEST_PORT = 9002;
-const TEST_WEBROOT = '__test__';
 const TEST_DIRECTORY = 'test';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -112,30 +111,14 @@ gulp.task('build', ['build:mkdir'], function(callback)
 // TASKS - test
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Cleans out test.
- */
-gulp.task('test:clean', function()
-{
-    return del([TEST_WEBROOT]);
-});
-
-/**
- * Make web directory.
- */
-gulp.task('test:mkdir', ['test:clean'], function(callback)
-{
-    return fs.mkdir(TEST_WEBROOT, callback);
-});
-
-/**
  * Creates info.json. This holds client data, such as version. It's basically
  * a trimmed 'package.json'.
  */
-gulp.task('test:info', ['test:mkdir'], function(callback)
+gulp.task('test:info', function(callback)
 {
     var info = createInfo(function(err, data)
     {
-        fs.writeFileSync(TEST_WEBROOT + '/' + INFO_FILE, JSON.stringify(data, null, 4));
+        fs.writeFileSync(TEST_DIRECTORY + '/' + INFO_FILE, JSON.stringify(data, null, 4));
         callback();
     });
 });
@@ -143,32 +126,32 @@ gulp.task('test:info', ['test:mkdir'], function(callback)
 /**
  * Links test results to web directory.
  */
-gulp.task('test:link', ['test:mkdir'], function()
+gulp.task('test:link', function()
 {
-    return gulp.src([TEST_DIRECTORY + '/index.html', 
-                     TEST_DIRECTORY + '/test.js'])
-               .pipe(symlink([TEST_WEBROOT + '/index.html',
-                              TEST_WEBROOT + '/test.js'], {force: true}));
+    return gulp.src([NODE_MODULES_DIRECTORY + '/mocha',
+                     NODE_MODULES_DIRECTORY + '/chai'])
+               .pipe(symlink([TEST_DIRECTORY + '/mocha',
+                              TEST_DIRECTORY + '/chai'], {force: true}));
 });
 
 /**
  * Bundle (Webpack) and start the test server.
  */
-gulp.task('test', ['test:mkdir', 'test:link', 'test:info'], function(callback)
+gulp.task('test', ['test:link', 'test:info'], function(callback)
 {
     webpackConfig.output.library = LIBRARY_NAME_VAR;
     webpackConfig.output.libraryTarget = 'var';
     var compiler = webpack(webpackConfig);
-    var server = new WebpackDevServer(compiler, { contentBase: TEST_WEBROOT });
+    var server = new WebpackDevServer(compiler, { contentBase: TEST_DIRECTORY });
     server.listen(TEST_PORT, TEST_HOST, function(err)
     {
         console.log('');
-        console.log('==========');
+        console.log('================================================================================');
         console.log('Starting server on: http://' + TEST_HOST + ':' + TEST_PORT);
-        console.log('Serving: ' + TEST_WEBROOT);
+        console.log('Serving: ' + TEST_DIRECTORY);
         console.log('');
         console.log('Make sure ' + TEST_HOST + ':' + TEST_PORT + ' is allowed access to the Rodan server');
-        console.log('==========');
+        console.log('================================================================================');
         console.log('');
     });
 });
@@ -191,7 +174,6 @@ gulp.task('default', function(callback)
 gulp.task('clean', function(callback)
 {
     gulp.start('build:clean');
-    gulp.start('test:clean');
     callback();
 });
 

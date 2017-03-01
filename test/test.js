@@ -1,6 +1,5 @@
 // Did we import?
 var rodan = rodan_client_core.default;
-console.log(rodan);
 
 // Load a config file.
 rodan.config.SERVER_HOST = 'api.dev.rodan.simssa.ca';

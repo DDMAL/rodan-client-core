@@ -5,5 +5,8 @@ node_modules/
 dist
 configuration.json
 npm-shrinkwrap.json
+test/chai
+test/info.json
+test/mocha
 ._*
 __*
