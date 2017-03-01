@@ -1,7 +1,7 @@
 import Core from 'core/Core';
 import Configuration from 'core/Configuration';
 import Events from 'lib/Events';
-import Environment from 'lib/Environment';
+import Environment from 'core/Environment';
 import Radio from 'backbone.radio';
 
 // Collections.
