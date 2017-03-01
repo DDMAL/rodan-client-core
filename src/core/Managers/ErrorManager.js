@@ -64,18 +64,12 @@ export default class ErrorHandler
                 }
 
                 // Go through the response text.
-                var first =  true;
                 for(var property in responseTextObject)
                 {
                     if (responseTextObject.hasOwnProperty(property))
                     {
                         message += '\n';
-                        if (first)
-                        {
-                            message += '\n';
-                            first = false;
-                        }
-                        message += responseTextObject[property];
+                        message += property + ': ' + responseTextObject[property];
                     }
                 }
                 this._showError(message, null);
@@ -92,6 +86,13 @@ export default class ErrorHandler
      */
     _showError(text, error)
     {
-        console.error(error);
+        if (error)
+        {
+            console.error(error);
+        }
+        else
+        {
+            console.warn(text);
+        }
     }
 }
