@@ -6,6 +6,7 @@
 const del = require('del');
 const fs = require('fs');
 const gulp = require('gulp');
+const ip = require('ip');
 const path = require('path');
 const symlink = require('gulp-sym');
 const webpack = require('webpack');
@@ -14,7 +15,7 @@ const WebpackDevServer = require("webpack-dev-server");
 ////////////////////////////////////////////////////////////////////////////////
 // CONFIGURATION - test
 ////////////////////////////////////////////////////////////////////////////////
-const TEST_HOST = '132.206.14.112';
+const TEST_HOST = ip.address();
 const TEST_PORT = 9002;
 const TEST_WEBROOT = '__test__';
 const TEST_DIRECTORY = 'test';
