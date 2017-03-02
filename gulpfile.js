@@ -25,7 +25,6 @@ const TEST_DIRECTORY = 'test';
 ////////////////////////////////////////////////////////////////////////////////
 const BUILD_ROOT = 'dist';
 const ENTRY_FILE = './src/index.js';
-const INFO_FILE = 'info.json';
 const LIBRARY_NAME = 'rodan-client-core';
 const LIBRARY_NAME_VAR = 'rodan_client_core';
 const LIBRARY_TARGET = 'umd';
@@ -111,19 +110,6 @@ gulp.task('build', ['build:mkdir'], function(callback)
 // TASKS - test
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Creates info.json. This holds client data, such as version. It's basically
- * a trimmed 'package.json'.
- */
-gulp.task('test:info', function(callback)
-{
-    var info = createInfo(function(err, data)
-    {
-        fs.writeFileSync(TEST_DIRECTORY + '/' + INFO_FILE, JSON.stringify(data, null, 4));
-        callback();
-    });
-});
-
-/**
  * Links test results to web directory.
  */
 gulp.task('test:link', function()
@@ -137,7 +123,7 @@ gulp.task('test:link', function()
 /**
  * Bundle (Webpack) and start the test server.
  */
-gulp.task('test', ['test:link', 'test:info'], function(callback)
+gulp.task('test', ['test:link'], function(callback)
 {
     webpackConfig.output.library = LIBRARY_NAME_VAR;
     webpackConfig.output.libraryTarget = 'var';
@@ -179,16 +165,3 @@ gulp.task('clean', function(callback)
     gulp.start('build:clean');
     callback();
 });
-
-////////////////////////////////////////////////////////////////////////////////
-// UTILITIES
-////////////////////////////////////////////////////////////////////////////////
-/**
- * Creates data for info.json.
- */
-function createInfo(callback)
-{
-    var json = require('./' + PACKAGE_FILE);
-    var info = {CLIENT: json};
-    callback(null, info);
-}

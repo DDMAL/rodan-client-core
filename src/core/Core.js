@@ -85,9 +85,6 @@ export default class Core
         this._initializeControllers();
         this._initializeManagers();
 
-        // Get client info.
-        Configuration.load('info.json');
-
         // Call post init.
         if (_postInitFunction)
         {

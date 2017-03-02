@@ -90,7 +90,10 @@ var Configuration = {
     ENFORCE_VERSION_COMPATIBILITY: true,
 
     // Created to hold info on plugins. 
-    PLUGINS: []
+    PLUGINS: [],
+
+    // Default client info.
+    CLIENT: { info: 'no application info provided' }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////
