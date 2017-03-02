@@ -76,7 +76,7 @@ describe('Authentication', function()
     {
         before(function(done) { ensureInitialization(done); });
         beforeEach(function(done) { ensureLogin(done); });
-        it(rodan.events.REQUEST__AUTHENTICATION_USER, function(done)
+        it(rodan.User.name, function(done)
         {
             var user = rodan.channel.request(rodan.events.REQUEST__AUTHENTICATION_USER);
             assert.instanceOf(user, rodan.User);

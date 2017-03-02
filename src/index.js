@@ -22,6 +22,13 @@ import WorkflowJobCollection from 'lib/Collections/WorkflowJobCollection';
 import WorkflowJobGroupCollection from 'lib/Collections/WorkflowJobGroupCollection';
 import WorkflowRunCollection from 'lib/Collections/WorkflowRunCollection';
 
+// Global Collections.
+import GlobalInputPortTypeCollection from 'lib/Collections/Global/GlobalInputPortTypeCollection';
+import GlobalJobCollection from 'lib/Collections/Global/GlobalJobCollection';
+import GlobalOutputPortTypeCollection from 'lib/Collections/Global/GlobalOutputPortTypeCollection';
+import GlobalProjectCollection from 'lib/Collections/Global/GlobalProjectCollection';
+import GlobalResourceTypeCollection from 'lib/Collections/Global/GlobalResourceTypeCollection';
+
 // Models.
 import BaseModel from 'lib/Models/BaseModel';
 import Connection from 'lib/Models/Connection';
@@ -70,6 +77,13 @@ const defaultExport =
 	WorkflowJobCollection: WorkflowJobCollection,
 	WorkflowJobGroupCollection: WorkflowJobGroupCollection,
 	WorkflowRunCollection: WorkflowRunCollection,
+
+	// Global Collections.
+	GlobalInputPortTypeCollection: GlobalInputPortTypeCollection,
+	GlobalJobCollection: GlobalJobCollection,
+	GlobalOutputPortTypeCollection: GlobalOutputPortTypeCollection,
+	GlobalProjectCollection: GlobalProjectCollection,
+	GlobalResourceTypeCollection: GlobalResourceTypeCollection,
 
 	// Models
 	BaseModel: BaseModel,
