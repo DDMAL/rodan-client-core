@@ -30,4 +30,15 @@ export default class GlobalInputPortTypeCollection extends GlobalCollection
         this._loadCommand = Events.REQUEST__GLOBAL_INPUTPORTTYPES_LOAD;
         this._requestCommand = Events.REQUEST__GLOBAL_INPUTPORTTYPE_COLLECTION;
     }
+
+    /**
+     * Nullifies singleton instance.
+     */
+    deinitialize()
+    {
+        if (_instance)
+        {
+            _instance = null;
+        }
+    }
 }

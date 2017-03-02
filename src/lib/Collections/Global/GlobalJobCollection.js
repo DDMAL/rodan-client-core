@@ -34,4 +34,15 @@ export default class GlobalJobCollection extends GlobalCollection
         this._enumerations.set('category', {label: 'Category'});
         this._enumerations.set('interactive', {label: 'Interactive', values: [{value: 'True', label: 'True'}, {value: 'False', label: 'False'}]});
     }
+
+    /**
+     * Nullifies singleton instance.
+     */
+    deinitialize()
+    {
+        if (_instance)
+        {
+            _instance = null;
+        }
+    }
 }

@@ -65,11 +65,6 @@ export default class ControllerAuthentication extends BaseController
     _handleAuthenticationResponse(event)
     {
         var request = event.currentTarget;
-        if (request.responseText === null)
-        {
-            Radio.channel('rodan-client-core').trigger(Events.EVENT__AUTHENTICATION_ERROR_NULL);
-        }
-        
         switch (request.status)
         {
             case 200:
@@ -103,11 +98,6 @@ export default class ControllerAuthentication extends BaseController
     _handleDeauthenticationResponse(event)
     {
         var request = event.currentTarget;
-        if (request.responseText === null)
-        {
-            Radio.channel('rodan-client-core').trigger(Events.EVENT__AUTHENTICATION_ERROR_NULL);
-        }
-
         switch (request.status)
         {
             case 200:

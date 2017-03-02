@@ -51,6 +51,19 @@ export default class Core
     }
 
     /**
+     * Destroys the singleton Core instance.
+     */
+    static deinitialize()
+    {
+        if (_instance)
+        {
+            Radio.channel('rodan-client-core').reset();
+            _instance._deinitializeCollections();
+            _instance = null;
+        }
+    }
+
+    /**
      * This method takes in a function that will be called after the Core is
      * initialized and before REQUEST__SERVER_LOAD_ROUTES is called. The
      * function passed here should initialize anything required for viewing or
@@ -62,7 +75,6 @@ export default class Core
     {
         _postInitFunction = postInitFunction;
     }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // PUBLIC METHODS
@@ -124,8 +136,6 @@ export default class Core
         this._controllerWorkflowJob = new ControllerWorkflowJob();
         this._controllerWorkflowJobGroup = new ControllerWorkflowJobGroup();
         this._controllerWorkflowRun = new ControllerWorkflowRun();
-
-
  //       this._resourceListController = new ControllerResourceList();
     }
 
@@ -152,6 +162,18 @@ export default class Core
         this._inputPortTypeCollection = new GlobalInputPortTypeCollection();
         this._outputPortTypeCollection = new GlobalOutputPortTypeCollection();
         this._projectCollection = new GlobalProjectCollection();
+    }
+
+    /**
+     * Deinitialize (delete) collections.
+     */
+    _deinitializeCollections()
+    {
+        this._jobCollection.deinitialize();
+        this._resourceTypeCollection.deinitialize();
+        this._inputPortTypeCollection.deinitialize();
+        this._outputPortTypeCollection.deinitialize();
+        this._projectCollection.deinitialize();
     }
 
     /**

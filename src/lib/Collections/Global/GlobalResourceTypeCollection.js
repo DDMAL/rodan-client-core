@@ -31,4 +31,15 @@ export default class GlobalResourceTypeCollection extends GlobalCollection
         this._loadCommand = Events.REQUEST__GLOBAL_RESOURCETYPES_LOAD;
         this._requestCommand = Events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION;
     }
+
+    /**
+     * Nullifies singleton instance.
+     */
+    deinitialize()
+    {
+        if (_instance)
+        {
+            _instance = null;
+        }
+    }
 }

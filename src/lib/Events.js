@@ -19,8 +19,6 @@ class Events
         ///////////////////////////////////////////////////////////////////////////////////////
         // Authentication
         ///////////////////////////////////////////////////////////////////////////////////////
-        /** Triggered when authentication error occurred with no other info. */
-        this.EVENT__AUTHENTICATION_ERROR_NULL = 'EVENT__AUTHENTICATION_ERROR_NULL';
         /** Triggered on success of authentication check. Sends {user: User}. */
         this.EVENT__AUTHENTICATION_LOGIN_SUCCESS = 'EVENT__AUTHENTICATION_LOGIN_SUCCESS';
         /** Triggered after authentication attempt; user must log in. */

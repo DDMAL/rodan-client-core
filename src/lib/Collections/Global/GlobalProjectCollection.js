@@ -32,4 +32,15 @@ export default class GlobalProjectCollection extends GlobalCollection
         this._loadCommand = Events.REQUEST__GLOBAL_PROJECTS_LOAD;
         this._requestCommand = Events.REQUEST__GLOBAL_PROJECT_COLLECTION;
     }
+
+    /**
+     * Nullifies singleton instance.
+     */
+    deinitialize()
+    {
+        if (_instance)
+        {
+            _instance = null;
+        }
+    }
 }
