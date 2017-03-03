@@ -2,7 +2,7 @@ const rodan = rodan_client_core.default;
 const assert = chai.assert;
 
 // Setup config.
-rodan.config.DEBUG = true;
+rodan.config.DEBUG = false;
 rodan.config.SERVER_HOST = 'api.dev.rodan.simssa.ca';
 const TIMER_WAIT = 4000;
 const TEST_USERNAME = 'test';
@@ -32,7 +32,6 @@ function ensureDeinitialization(done)
 /**
  * Ensures login with TEST_USERNAME/TEST_PASSWORD.
  */
-var isLoggedIn = false;
 function ensureLogin(done)
 {
     rodan.channel.once(rodan.events.EVENT__AUTHENTICATION_LOGIN_SUCCESS, function(options)
@@ -50,4 +49,23 @@ function ensureLogout(done)
 {
     rodan.channel.once(rodan.events.EVENT__AUTHENTICATION_LOGOUT_SUCCESS, done);
     rodan.channel.request(rodan.events.REQUEST__AUTHENTICATION_LOGOUT);
+}
+
+/**
+ * Ensure init and login.
+ */
+function ensureInitializationAndLogin(done)
+{
+    ensureInitialization(function() { ensureLogin(done); });
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// UTILITY METHODS
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * Generate random ID.
+ */
+function createRandomId()
+{
+    return Math.floor(Math.random() * 100000);
 }

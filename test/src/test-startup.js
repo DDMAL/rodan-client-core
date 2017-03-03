@@ -1,4 +1,3 @@
-// Startup/init test.
 describe('#initialize()', function() 
 {
     after(rodan.deinitialize);
