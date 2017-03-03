@@ -183,7 +183,7 @@ class Events
         this.REQUEST__SERVER_DATE = 'REQUEST__SERVER_DATE';
         /** Request server hostname. Returns string (hostname). */
         this.REQUEST__SERVER_GET_HOSTNAME = 'REQUEST__SERVER_GET_HOSTNAME';
-        /** Request server URL for route. Takes {route: string}. Returns string (URL). */
+        /** Request server URL for route. Takes string (route name). Returns string (URL). */
         this.REQUEST__SERVER_GET_ROUTE = 'REQUEST__SERVER_GET_ROUTE';
         /** Request options for server route. Takes {route: string}. Returns Javascript object with all options for route. */
         this.REQUEST__SERVER_GET_ROUTE_OPTIONS = 'REQUEST__SERVER_GET_ROUTE_OPTIONS';

@@ -2,11 +2,12 @@ const rodan = rodan_client_core.default;
 const assert = chai.assert;
 
 // Setup config.
-rodan.config.DEBUG = false;
+rodan.config.DEBUG = true;
 rodan.config.SERVER_HOST = 'api.dev.rodan.simssa.ca';
 const TIMER_WAIT = 4000;
 const TEST_USERNAME = 'test';
 const TEST_PASSWORD = 'test';
+const TEST_ROUTE = 'auth-me'
 
 ////////////////////////////////////////////////////////////////////////////////
 // UTILITY HOOKS
